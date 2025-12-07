@@ -20,118 +20,239 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS for styling with background image
+# Custom CSS for elegant automotive theme
 st.markdown("""
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+    
+    * {
+        font-family: 'Montserrat', sans-serif;
+    }
+    
     .stApp {
-        background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920');
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                          url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
+    
     .main {
         padding: 2rem;
         background-color: transparent;
     }
+    
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        box-shadow: 2px 0 20px rgba(0,0,0,0.3);
+    }
+    
+    [data-testid="stSidebar"] > div:first-child {
+        padding-top: 2rem;
+    }
+    
+    /* Buttons */
     .stButton>button {
         width: 100%;
-        background-color: #8B8B8B;
-        color: white;
-        border-radius: 10px;
-        padding: 0.75rem;
-        font-weight: bold;
-        border: none;
-        transition: all 0.3s;
+        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+        color: #000000;
+        border-radius: 12px;
+        padding: 0.9rem;
+        font-weight: 600;
+        border: 2px solid rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
     }
+    
     .stButton>button:hover {
-        background-color: #6B6B6B;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        border-color: #000000;
     }
+    
     .stDownloadButton>button {
         width: 100%;
-        background-color: #8B8B8B;
-        color: white;
-        border-radius: 10px;
-        padding: 0.75rem;
-        font-weight: bold;
-    }
-    .header-style {
-        font-size: 3rem;
-        font-weight: bold;
+        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
         color: #000000;
-        text-align: center;
-        margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+        border-radius: 12px;
+        padding: 0.9rem;
+        font-weight: 600;
+        border: 2px solid rgba(0,0,0,0.1);
     }
-    .subheader-style {
-        font-size: 1.2rem;
+    
+    /* Radio buttons in sidebar */
+    [data-testid="stSidebar"] .stRadio > label {
+        background: transparent;
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+        margin: 0.3rem 0;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        color: #000000;
+    }
+    
+    [data-testid="stSidebar"] .stRadio > div {
+        gap: 0.5rem;
+    }
+    
+    [data-testid="stSidebar"] .stRadio label:hover {
+        background: rgba(0,0,0,0.05);
+    }
+    
+    /* Header styling */
+    .header-style {
+        font-size: 4rem;
+        font-weight: 700;
         color: #ffffff;
         text-align: center;
-        margin-bottom: 2rem;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        margin-bottom: 0.5rem;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
+        letter-spacing: 2px;
+        text-transform: uppercase;
     }
+    
+    .subheader-style {
+        font-size: 1.3rem;
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        font-weight: 300;
+        letter-spacing: 1px;
+    }
+    
+    /* Info box */
     .info-box {
-        background-color: rgba(72, 145, 150, 0.85);
-        padding: 1.5rem;
-        border-radius: 10px;
-        border-left: 5px solid #8B8B8B;
+        background: rgba(255, 255, 255, 0.98);
+        padding: 2rem;
+        border-radius: 15px;
         margin-bottom: 2rem;
-        backdrop-filter: blur(10px);
-        color: white;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.3);
     }
+    
     .info-box h3 {
-        color: white;
+        color: #000000;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
     }
+    
+    .info-box p, .info-box ul {
+        color: #333333;
+        line-height: 1.8;
+    }
+    
     .info-box a {
-        color: #E0E0E0;
+        color: #000000;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 2px solid #000000;
+        transition: all 0.3s ease;
     }
-    [data-testid="stSidebar"] {
-        background-color: rgba(135, 206, 235, 0.9);
+    
+    .info-box a:hover {
+        color: #666666;
+        border-bottom-color: #666666;
+    }
+    
+    /* Content sections */
+    .stDataFrame {
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    
+    /* Metrics */
+    div[data-testid="stMetricValue"] {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 1rem;
+        border-radius: 10px;
+        font-weight: 700;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    div[data-testid="stMetricLabel"] {
+        color: #ffffff;
+        font-weight: 600;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    }
+    
+    /* Headers */
+    h1, h2, h3 {
+        color: #ffffff;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
+        font-weight: 700;
+    }
+    
+    /* Text elements */
+    .stMarkdown {
+        color: #ffffff;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+    }
+    
+    /* Input fields */
+    .stNumberInput > div > div > input {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        border: 2px solid rgba(0,0,0,0.1);
+        font-weight: 600;
+    }
+    
+    .stSelectbox > div > div {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+    }
+    
+    /* Expander */
+    .streamlit-expanderHeader {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        font-weight: 600;
+    }
+    
+    /* Progress bar */
+    .stProgress > div > div > div {
+        background: linear-gradient(90deg, #ffffff 0%, #cccccc 100%);
+    }
+    
+    /* Success/Warning/Info messages */
+    .stSuccess, .stWarning, .stInfo, .stError {
+        background: rgba(255, 255, 255, 0.95);
+        color: #000000;
+        border-radius: 10px;
         backdrop-filter: blur(10px);
     }
-    [data-testid="stSidebar"] .stRadio > label {
-        color: white;
-        font-weight: bold;
+    
+    /* Sidebar title */
+    [data-testid="stSidebar"] h1 {
+        color: #000000;
+        text-shadow: none;
     }
-    .stDataFrame {
-        background-color: rgba(255, 255, 255, 0.95);
-        border-radius: 10px;
-        padding: 1rem;
-    }
-    div[data-testid="stMetricValue"] {
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 0.5rem;
-        border-radius: 5px;
-    }
-    h1, h2, h3 {
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-    }
-    .stMarkdown {
-        color: white;
-    }
-    .stDataFrame {
-        background-color: rgba(255, 255, 255, 0.95);
-        border-radius: 10px;
-        padding: 1rem;
-    }
-    div[data-testid="stMetricValue"] {
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 0.5rem;
-        border-radius: 5px;
-    }
+    
+    /* Remove Streamlit branding */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    
     </style>
 """, unsafe_allow_html=True)
 
 # Header
 st.markdown('<p class="header-style">MY BEST DATA APP</p>', unsafe_allow_html=True)
-st.markdown('<p class="subheader-style">Web Scraping & Data Analysis Tool</p>', unsafe_allow_html=True)
+st.markdown('<p class="subheader-style">Premium Web Scraping & Data Analytics Platform</p>', unsafe_allow_html=True)
 
 # Description
 st.markdown("""
     <div class="info-box">
-    <h3>About This App</h3>
+    <h3>About This Application</h3>
     <p>This app performs webscraping of data from <strong>dakar-auto</strong> over multiple pages. 
     You can also download pre-scraped data from the app directly without scraping them.</p>
     
@@ -148,7 +269,7 @@ st.markdown("""
 
 # Sidebar
 st.sidebar.image("https://img.icons8.com/fluency/96/000000/car.png", width=100)
-st.sidebar.title("Menu")
+st.sidebar.title("Navigation Menu")
 st.sidebar.markdown("---")
 
 menu_option = st.sidebar.radio(
@@ -362,15 +483,15 @@ elif menu_option == "Dashboard":
                             top_brands.columns = ['Brand', 'Count']
                             fig1 = px.bar(top_brands, x='Brand', y='Count', 
                                          color='Count',
-                                         color_continuous_scale='Reds')
-                            fig1.update_layout(height=400, showlegend=False)
+                                         color_continuous_scale='Greys')
+                            fig1.update_layout(height=400, showlegend=False, paper_bgcolor='rgba(255,255,255,0.95)', plot_bgcolor='rgba(255,255,255,0.95)')
                             st.plotly_chart(fig1, use_container_width=True)
                         
                         with col2:
                             st.markdown("**Brand Distribution**")
                             fig2 = px.pie(top_brands, values='Count', names='Brand',
-                                         color_discrete_sequence=px.colors.sequential.RdBu)
-                            fig2.update_layout(height=400)
+                                         color_discrete_sequence=px.colors.sequential.gray)
+                            fig2.update_layout(height=400, paper_bgcolor='rgba(255,255,255,0.95)')
                             st.plotly_chart(fig2, use_container_width=True)
                     
                     # Fuel type and gearbox
@@ -384,8 +505,8 @@ elif menu_option == "Dashboard":
                                 fuel_counts.columns = ['Fuel Type', 'Count']
                                 fig3 = px.bar(fuel_counts, x='Fuel Type', y='Count',
                                              color='Count',
-                                             color_continuous_scale='Oranges')
-                                fig3.update_layout(height=400, showlegend=False)
+                                             color_continuous_scale='Greys')
+                                fig3.update_layout(height=400, showlegend=False, paper_bgcolor='rgba(255,255,255,0.95)', plot_bgcolor='rgba(255,255,255,0.95)')
                                 st.plotly_chart(fig3, use_container_width=True)
                         
                         if 'gearbox' in df.columns:
@@ -394,8 +515,8 @@ elif menu_option == "Dashboard":
                                 gearbox_counts = df['gearbox'].value_counts().reset_index()
                                 gearbox_counts.columns = ['Gearbox', 'Count']
                                 fig4 = px.pie(gearbox_counts, values='Count', names='Gearbox',
-                                             color_discrete_sequence=px.colors.sequential.Purples)
-                                fig4.update_layout(height=400)
+                                             color_discrete_sequence=px.colors.sequential.gray)
+                                fig4.update_layout(height=400, paper_bgcolor='rgba(255,255,255,0.95)')
                                 st.plotly_chart(fig4, use_container_width=True)
                     
                     # Price analysis
@@ -413,8 +534,8 @@ elif menu_option == "Dashboard":
                         with col1:
                             st.markdown("**Price Distribution**")
                             fig5 = px.histogram(df_price, x='price_numeric', nbins=30,
-                                               color_discrete_sequence=['#FF4B4B'])
-                            fig5.update_layout(height=400, xaxis_title="Price (FCFA)", yaxis_title="Count")
+                                               color_discrete_sequence=['#333333'])
+                            fig5.update_layout(height=400, xaxis_title="Price (FCFA)", yaxis_title="Count", paper_bgcolor='rgba(255,255,255,0.95)', plot_bgcolor='rgba(255,255,255,0.95)')
                             st.plotly_chart(fig5, use_container_width=True)
                         
                         with col2:
@@ -426,8 +547,8 @@ elif menu_option == "Dashboard":
                                 avg_price_by_brand.columns = ['Brand', 'Average Price']
                                 fig6 = px.bar(avg_price_by_brand, x='Brand', y='Average Price',
                                              color='Average Price',
-                                             color_continuous_scale='Greens')
-                                fig6.update_layout(height=400, showlegend=False)
+                                             color_continuous_scale='Greys')
+                                fig6.update_layout(height=400, showlegend=False, paper_bgcolor='rgba(255,255,255,0.95)', plot_bgcolor='rgba(255,255,255,0.95)')
                                 st.plotly_chart(fig6, use_container_width=True)
                     
                     # Year analysis
@@ -441,8 +562,8 @@ elif menu_option == "Dashboard":
                         year_counts.columns = ['Year', 'Count']
                         
                         fig7 = px.line(year_counts, x='Year', y='Count', markers=True,
-                                      color_discrete_sequence=['#FF4B4B'])
-                        fig7.update_layout(height=400, xaxis_title="Year", yaxis_title="Number of Listings")
+                                      color_discrete_sequence=['#000000'])
+                        fig7.update_layout(height=400, xaxis_title="Year", yaxis_title="Number of Listings", paper_bgcolor='rgba(255,255,255,0.95)', plot_bgcolor='rgba(255,255,255,0.95)')
                         st.plotly_chart(fig7, use_container_width=True)
                 else:
                     # Fallback to basic charts using streamlit native charts
@@ -509,7 +630,7 @@ elif menu_option == "App Evaluation":
 # Footer
 st.markdown("---")
 st.markdown("""
-    <div style='text-align: center; color: #666;'>
-        <p>Developed with love using Streamlit | 2024 Dakar Auto Scraper</p>
+    <div style='text-align: center; color: #ffffff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);'>
+        <p style='font-weight: 600; letter-spacing: 1px;'>Developed with passion | 2024 Dakar Auto Scraper Premium</p>
     </div>
 """, unsafe_allow_html=True)
