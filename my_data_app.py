@@ -9,7 +9,7 @@ from datetime import datetime
 
 # Page configuration
 st.set_page_config(
-    page_title="DAKA_AUTO_SCRAPER",
+    page_title="DAKAR_AUTO_SCRAPER",
     page_icon="🚗",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -599,3 +599,4 @@ st.markdown("""
     <p style='margin: 0;'><strong>Made with ❤️ by DAKA Team | © 2024 DAKA_AUTO_SCRAPER</strong></p>
 </div>
 """, unsafe_allow_html=True)
+
