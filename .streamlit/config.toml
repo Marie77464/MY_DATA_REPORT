@@ -1,5 +1,5 @@
 [theme]
 backgroundColor="transparent"
-secondaryBackgroundColor="rgba(255,255,255,0.1)"
+secondaryBackgroundColor="transparent"
 textColor="#ffffff"
 font="sans serif"
