@@ -42,9 +42,9 @@ st.markdown("""
         background-color: transparent;
     }
     
-    /* Sidebar styling - MODERN GRADIENT */
+    /* Sidebar styling - WHITE */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(20px);
         box-shadow: 2px 0 20px rgba(0,0,0,0.3);
     }
@@ -53,10 +53,10 @@ st.markdown("""
         padding-top: 2rem;
     }
     
-    /* Buttons - VIBRANT GRADIENT */
+    /* Buttons - PINK GRADIENT */
     .stButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        background: linear-gradient(135deg, #FFB6D9 0%, #FF69B4 100%);
         color: #ffffff;
         border-radius: 12px;
         padding: 0.9rem;
@@ -66,36 +66,36 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 1px;
         font-size: 0.9rem;
-        box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
     }
     
     .stButton>button:hover {
-        background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        background: linear-gradient(135deg, #FF69B4 0%, #FF1493 100%);
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(245, 87, 108, 0.6);
+        box-shadow: 0 8px 25px rgba(255, 105, 180, 0.6);
         border-color: #ffffff;
     }
     
     .stDownloadButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        background: linear-gradient(135deg, #FFB6D9 0%, #FF69B4 100%);
         color: #ffffff;
         border-radius: 12px;
         padding: 0.9rem;
         font-weight: 600;
         border: 2px solid rgba(255,255,255,0.3);
-        box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+        box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
     }
     
-    /* Radio buttons in sidebar - WHITE ON GRADIENT */
+    /* Radio buttons in sidebar - PINK TEXT */
     [data-testid="stSidebar"] .stRadio > label {
-        background: rgba(255, 255, 255, 0.1);
+        background: transparent;
         padding: 0.8rem 1rem;
         border-radius: 10px;
         margin: 0.3rem 0;
         transition: all 0.3s ease;
         font-weight: 500;
-        color: #ffffff;
+        color: #FF1493;
     }
     
     [data-testid="stSidebar"] .stRadio > div {
@@ -103,7 +103,7 @@ st.markdown("""
     }
     
     [data-testid="stSidebar"] .stRadio label:hover {
-        background: rgba(255, 255, 255, 0.25);
+        background: rgba(255, 20, 147, 0.1);
         transform: translateX(5px);
     }
     
@@ -111,7 +111,7 @@ st.markdown("""
     .header-style {
         font-size: 4rem;
         font-weight: 700;
-        color: #ffffff;
+        color: #FF1493;
         text-align: center;
         margin-bottom: 0.5rem;
         text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
@@ -121,7 +121,7 @@ st.markdown("""
     
     .subheader-style {
         font-size: 1.3rem;
-        color: #ffffff;
+        color: #FF69B4;
         text-align: center;
         margin-bottom: 2.5rem;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
@@ -129,40 +129,40 @@ st.markdown("""
         letter-spacing: 1px;
     }
     
-    /* Info box - COLORFUL GRADIENT */
+    /* Info box - WHITE */
     .info-box {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+        background: rgba(255, 255, 255, 0.98);
         padding: 2rem;
         border-radius: 15px;
         margin-bottom: 2rem;
         backdrop-filter: blur(20px);
-        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.5);
+        box-shadow: 0 8px 32px rgba(255, 20, 147, 0.3);
         border: 1px solid rgba(255,255,255,0.3);
     }
     
     .info-box h3 {
-        color: #ffffff;
+        color: #FF1493;
         font-weight: 700;
         margin-bottom: 1rem;
         font-size: 1.5rem;
     }
     
     .info-box p, .info-box ul {
-        color: #ffffff;
+        color: #333333;
         line-height: 1.8;
     }
     
     .info-box a {
-        color: #ffffff;
+        color: #FF1493;
         font-weight: 600;
         text-decoration: none;
-        border-bottom: 2px solid #ffffff;
+        border-bottom: 2px solid #FF1493;
         transition: all 0.3s ease;
     }
     
     .info-box a:hover {
-        color: #f093fb;
-        border-bottom-color: #f093fb;
+        color: #FF69B4;
+        border-bottom-color: #FF69B4;
     }
     
     /* Content sections - WHITE */
@@ -183,21 +183,21 @@ st.markdown("""
     }
     
     div[data-testid="stMetricLabel"] {
-        color: #ffffff;
+        color: #FF1493;
         font-weight: 600;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }
     
     /* Headers */
     h1, h2, h3 {
-        color: #ffffff;
+        color: #FF1493;
         text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
         font-weight: 700;
     }
     
     /* Text elements */
     .stMarkdown {
-        color: #ffffff;
+        color: #FF1493;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }
     
@@ -234,19 +234,19 @@ st.markdown("""
         backdrop-filter: blur(10px);
     }
     
-    /* Sidebar title - WHITE ON GRADIENT */
+    /* Sidebar title - PINK */
     [data-testid="stSidebar"] h1 {
-        color: #ffffff;
+        color: #FF1493;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
     
     [data-testid="stSidebar"] .stMarkdown {
-        color: #ffffff;
+        color: #333333;
     }
     
     [data-testid="stSidebar"] .stInfo {
-        background: rgba(255, 255, 255, 0.2);
-        color: #ffffff;
+        background: rgba(255, 20, 147, 0.1);
+        color: #333333;
         border-radius: 10px;
     }
     
@@ -264,27 +264,27 @@ st.markdown('<p class="subheader-style">Welcome to the Ultimate Car Data Extract
 # Welcome message
 st.markdown("""
     <div class="info-box">
-    <h3>👋 Welcome!</h3>
+    <h3>Welcome!</h3>
     <p>Welcome to <strong>Dakar Auto Scraper</strong> - your professional tool designed specifically to extract and analyze vehicle data from <strong>Dakar-Auto.com</strong>, Senegal's leading automotive marketplace!</p>
     
-    <p>🎯 <strong>What can you do here?</strong></p>
+    <p><strong>What can you do here?</strong></p>
     <ul>
-        <li>🔍 <strong>Scrape live data</strong> - Extract fresh listings from multiple pages</li>
-        <li>📥 <strong>Access pre-scraped data</strong> - Download ready-to-use datasets</li>
-        <li>📊 <strong>Visualize insights</strong> - Explore interactive dashboards and analytics</li>
-        <li>💬 <strong>Share feedback</strong> - Help us improve with your valuable input</li>
+        <li><strong>Scrape live data</strong> - Extract fresh listings from multiple pages</li>
+        <li><strong>Access pre-scraped data</strong> - Download ready-to-use datasets</li>
+        <li><strong>Visualize insights</strong> - Explore interactive dashboards and analytics</li>
+        <li><strong>Share feedback</strong> - Help us improve with your valuable input</li>
     </ul>
     
-    <p>🛠️ <strong>Powered by:</strong> Python, Streamlit, BeautifulSoup, Pandas, Plotly</p>
+    <p><strong>Powered by:</strong> Python, Streamlit, BeautifulSoup, Pandas, Plotly</p>
     
-    <p>🌐 <strong>Data sources from Dakar-Auto.com:</strong></p>
+    <p><strong>Data sources from Dakar-Auto.com:</strong></p>
     <ul>
-        <li><a href="https://dakar-auto.com/senegal/voitures-4" target="_blank">🚙 Cars & Vehicles</a></li>
-        <li><a href="https://dakar-auto.com/senegal/motos-and-scooters-3" target="_blank">🏍️ Motorcycles & Scooters</a></li>
-        <li><a href="https://dakar-auto.com/senegal/location-de-voitures-19" target="_blank">🔑 Car Rentals</a></li>
+        <li><a href="https://dakar-auto.com/senegal/voitures-4" target="_blank">Used Cars</a></li>
+        <li><a href="https://dakar-auto.com/senegal/motos-and-scooters-3" target="_blank">Motorcycles and Scooters</a></li>
+        <li><a href="https://dakar-auto.com/senegal/location-de-voitures-19" target="_blank">Car Rentals</a></li>
     </ul>
     
-    <p>✨ Get started by choosing an option from the menu on the left!</p>
+    <p>Get started by choosing an option from the menu on the left!</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -651,7 +651,7 @@ elif menu_option == "App Evaluation":
 # Footer
 st.markdown("---")
 st.markdown("""
-    <div style='text-align: center; color: #ffffff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);'>
+    <div style='text-align: center; color: #FF1493; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);'>
         <p style='font-weight: 600; letter-spacing: 1px;'>Developed with passion | 2024 Dakar Auto Scraper Premium</p>
     </div>
 """, unsafe_allow_html=True)
