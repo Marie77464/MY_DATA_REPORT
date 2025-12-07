@@ -30,7 +30,7 @@ st.markdown("""
     }
     
     .stApp {
-        background-image: url('https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=1920&q=80');
+        background-image: url('https://images.pexels.com/photos/6891809/pexels-photo-6891809.jpeg?auto=compress&cs=tinysrgb&w=1920');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
