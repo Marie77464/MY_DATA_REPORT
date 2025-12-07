@@ -24,8 +24,7 @@ st.set_page_config(
 st.markdown("""
     <style>
     .stApp {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-                          url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920');
+        background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -37,7 +36,7 @@ st.markdown("""
     }
     .stButton>button {
         width: 100%;
-        background-color: #FF4B4B;
+        background-color: #8B8B8B;
         color: white;
         border-radius: 10px;
         padding: 0.75rem;
@@ -46,12 +45,12 @@ st.markdown("""
         transition: all 0.3s;
     }
     .stButton>button:hover {
-        background-color: #FF3333;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        background-color: #6B6B6B;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
     .stDownloadButton>button {
         width: 100%;
-        background-color: #00C853;
+        background-color: #8B8B8B;
         color: white;
         border-radius: 10px;
         padding: 0.75rem;
@@ -60,27 +59,57 @@ st.markdown("""
     .header-style {
         font-size: 3rem;
         font-weight: bold;
-        color: #FF4B4B;
+        color: #000000;
         text-align: center;
         margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
     }
     .subheader-style {
         font-size: 1.2rem;
-        color: #666;
+        color: #ffffff;
         text-align: center;
         margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
     }
     .info-box {
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(72, 145, 150, 0.85);
         padding: 1.5rem;
         border-radius: 10px;
-        border-left: 5px solid #FF4B4B;
+        border-left: 5px solid #8B8B8B;
         margin-bottom: 2rem;
         backdrop-filter: blur(10px);
+        color: white;
+    }
+    .info-box h3 {
+        color: white;
+    }
+    .info-box a {
+        color: #E0E0E0;
     }
     [data-testid="stSidebar"] {
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(135, 206, 235, 0.9);
         backdrop-filter: blur(10px);
+    }
+    [data-testid="stSidebar"] .stRadio > label {
+        color: white;
+        font-weight: bold;
+    }
+    .stDataFrame {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        padding: 1rem;
+    }
+    div[data-testid="stMetricValue"] {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 0.5rem;
+        border-radius: 5px;
+    }
+    h1, h2, h3 {
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+    .stMarkdown {
+        color: white;
     }
     .stDataFrame {
         background-color: rgba(255, 255, 255, 0.95);
