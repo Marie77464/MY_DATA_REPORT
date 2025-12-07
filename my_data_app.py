@@ -77,6 +77,15 @@ st.markdown("""
     .stMarkdown p {
         color: #E2E8F0;
     }
+    div[data-testid="stDataFrame"] {
+        background-color: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(255,215,0,0.3);
+    }
+    div[data-testid="stDataFrame"] > div {
+        background-color: white !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -268,31 +277,31 @@ def scrape_location(num_pages):
 init_db()
 
 # Main title
-st.markdown("<h1> DAKA_AUTO_SCRAPER </h1>", unsafe_allow_html=True)
+st.markdown("<h1>🚗 DAKA_AUTO_SCRAPER 🏍️</h1>", unsafe_allow_html=True)
 
 # Sidebar
 with st.sidebar:
     st.image("https://img.icons8.com/clouds/200/000000/car.png")
-    st.markdown("###  Navigation")
+    st.markdown("### 📊 Navigation")
     menu = st.radio(
         "",
-        [" Home", " Scraper", " Dashboard", " View Data", " Web Evaluation App"],
+        ["🏠 Home", "🔍 Scraper", "📈 Dashboard", "📁 View Data", "📝 Web Evaluation App"],
         label_visibility="collapsed"
     )
     
     st.markdown("---")
-    st.markdown("###  About")
+    st.markdown("### ℹ️ About")
     st.info("DAKA_AUTO_SCRAPER is a powerful tool to scrape and analyze car data from Dakar-Auto.com")
 
 # HOME PAGE
-if menu == " Home":
-    st.markdown("##  Welcome to DAKA_AUTO_SCRAPER!")
+if menu == "🏠 Home":
+    st.markdown("## 👋 Welcome to DAKA_AUTO_SCRAPER!")
     
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("""
         <div style='background: rgba(26, 32, 44, 0.9); padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(255,215,0,0.3); border: 2px solid #FFD700;'>
-            <h3 style='color: #FFD700;'> Cars</h3>
+            <h3 style='color: #FFD700;'>🚗 Cars</h3>
             <p style='color: #E2E8F0;'>Scrape detailed car listings including brand, model, year, and more!</p>
         </div>
         """, unsafe_allow_html=True)
@@ -300,7 +309,7 @@ if menu == " Home":
     with col2:
         st.markdown("""
         <div style='background: rgba(26, 32, 44, 0.9); padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(255,215,0,0.3); border: 2px solid #FFD700;'>
-            <h3 style='color: #FFD700;'> Motos</h3>
+            <h3 style='color: #FFD700;'>🏍️ Motos</h3>
             <p style='color: #E2E8F0;'>Get information about motorcycles and scooters available in Senegal!</p>
         </div>
         """, unsafe_allow_html=True)
@@ -308,13 +317,13 @@ if menu == " Home":
     with col3:
         st.markdown("""
         <div style='background: rgba(26, 32, 44, 0.9); padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(255,215,0,0.3); border: 2px solid #FFD700;'>
-            <h3 style='color: #FFD700;'> Location</h3>
+            <h3 style='color: #FFD700;'>🔑 Location</h3>
             <p style='color: #E2E8F0;'>Explore car rental options with pricing and availability!</p>
         </div>
         """, unsafe_allow_html=True)
     
     st.markdown("---")
-    st.markdown("###  Quick Start Guide")
+    st.markdown("### 🚀 Quick Start Guide")
     st.markdown("""
     <div style='color: #E2E8F0;'>
     <ol>
@@ -328,61 +337,61 @@ if menu == " Home":
     """, unsafe_allow_html=True)
 
 # SCRAPER PAGE
-elif menu == " Scraper":
-    st.markdown("##  Start Scraping")
+elif menu == "🔍 Scraper":
+    st.markdown("## 🔍 Start Scraping")
     
     col1, col2 = st.columns([2, 1])
     
     with col1:
         url_choice = st.selectbox(
-            " Select data source:",
-            [" Voitures (Cars)", " Motos & Scooters", " Location de Voitures (Car Rental)"]
+            "📍 Select data source:",
+            ["🚗 Voitures (Cars)", "🏍️ Motos & Scooters", "🔑 Location de Voitures (Car Rental)"]
         )
     
     with col2:
-        num_pages = st.number_input(" Number of pages:", min_value=1, max_value=50, value=1)
+        num_pages = st.number_input("📄 Number of pages:", min_value=1, max_value=50, value=1)
     
     st.markdown("---")
     
-    if st.button(" Start Scraping", use_container_width=True):
-        with st.spinner(' Scraping in progress...'):
+    if st.button("🚀 Start Scraping", use_container_width=True):
+        with st.spinner('🔄 Scraping in progress...'):
             try:
                 if "Voitures" in url_choice and "Location" not in url_choice:
                     df = scrape_voitures(num_pages)
                     if len(df) > 0:
                         save_to_db(df, 'voitures')
-                        st.success(f' Successfully scraped {len(df)} cars!')
+                        st.success(f'✅ Successfully scraped {len(df)} cars!')
                         st.balloons()
                         st.dataframe(df, use_container_width=True)
                     else:
-                        st.warning(" No data found. Please try again.")
+                        st.warning("⚠️ No data found. Please try again.")
                     
                 elif "Motos" in url_choice:
                     df = scrape_motos(num_pages)
                     if len(df) > 0:
                         save_to_db(df, 'motos')
-                        st.success(f' Successfully scraped {len(df)} motos!')
+                        st.success(f'✅ Successfully scraped {len(df)} motos!')
                         st.balloons()
                         st.dataframe(df, use_container_width=True)
                     else:
-                        st.warning(" No data found. Please try again.")
+                        st.warning("⚠️ No data found. Please try again.")
                     
                 elif "Location" in url_choice:
                     df = scrape_location(num_pages)
                     if len(df) > 0:
                         save_to_db(df, 'location')
-                        st.success(f' Successfully scraped {len(df)} rental cars!')
+                        st.success(f'✅ Successfully scraped {len(df)} rental cars!')
                         st.balloons()
                         st.dataframe(df, use_container_width=True)
                     else:
-                        st.warning(" No data found. Please try again.")
+                        st.warning("⚠️ No data found. Please try again.")
                 
             except Exception as e:
-                st.error(f' Error during scraping: {str(e)}')
+                st.error(f'❌ Error during scraping: {str(e)}')
 
 # DASHBOARD PAGE
-elif menu == " Dashboard":
-    st.markdown("##  Data Analytics Dashboard")
+elif menu == "📈 Dashboard":
+    st.markdown("## 📈 Data Analytics Dashboard")
     
     data_type = st.selectbox(
         "Select data to visualize:",
@@ -399,18 +408,18 @@ elif menu == " Dashboard":
         # Metrics
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric(" Total Records", len(df_clean))
+            st.metric("📊 Total Records", len(df_clean))
         with col2:
-            st.metric(" Unique Brands", df_clean['brand'].nunique())
+            st.metric("🏷️ Unique Brands", df_clean['brand'].nunique())
         with col3:
             if 'price' in df_clean.columns:
                 try:
                     avg_price = df_clean['price'].str.replace(',', '').astype(float).mean()
-                    st.metric(" Avg Price (FCFA)", f"{avg_price:,.0f}")
+                    st.metric("💰 Avg Price (FCFA)", f"{avg_price:,.0f}")
                 except:
-                    st.metric(" Avg Price (FCFA)", "N/A")
+                    st.metric("💰 Avg Price (FCFA)", "N/A")
         with col4:
-            st.metric(" Latest Year", df_clean['year'].max() if 'year' in df_clean.columns else "N/A")
+            st.metric("📅 Latest Year", df_clean['year'].max() if 'year' in df_clean.columns else "N/A")
         
         st.markdown("---")
         
@@ -458,7 +467,7 @@ elif menu == " Dashboard":
         
         # Price distribution
         if 'price' in df_clean.columns:
-            st.markdown("###  Price Distribution")
+            st.markdown("### 💰 Price Distribution")
             try:
                 df_clean['price_numeric'] = df_clean['price'].str.replace(',', '').astype(float)
                 fig3 = px.histogram(
@@ -476,14 +485,14 @@ elif menu == " Dashboard":
                 )
                 st.plotly_chart(fig3, use_container_width=True)
             except:
-                st.warning(" Could not create price distribution chart")
+                st.warning("⚠️ Could not create price distribution chart")
         
     else:
-        st.warning(" No data available. Please scrape some data first!")
+        st.warning("⚠️ No data available. Please scrape some data first!")
 
 # VIEW DATA PAGE
-elif menu == " View Data":
-    st.markdown("##  View Scraped Data")
+elif menu == "📁 View Data":
+    st.markdown("## 📁 View Scraped Data")
     
     data_type = st.selectbox(
         "Select data to view:",
@@ -494,21 +503,21 @@ elif menu == " View Data":
     df = load_from_db(table_map[data_type])
     
     if len(df) > 0:
-        st.success(f" Found {len(df)} records in {data_type} table")
+        st.success(f"✅ Found {len(df)} records in {data_type} table")
         
         # Search and filter
         col1, col2 = st.columns([3, 1])
         with col1:
-            search = st.text_input(" Search in data:", "")
+            search = st.text_input("🔍 Search in data:", "")
         with col2:
-            if st.button(" Clear Table"):
-                confirm = st.checkbox(" Confirm deletion")
+            if st.button("🗑️ Clear Table"):
+                confirm = st.checkbox("⚠️ Confirm deletion")
                 if confirm:
                     conn = sqlite3.connect('daka_auto.db')
                     conn.execute(f"DELETE FROM {table_map[data_type]}")
                     conn.commit()
                     conn.close()
-                    st.success(" Table cleared!")
+                    st.success("✅ Table cleared!")
                     st.rerun()
         
         # Filter dataframe
@@ -527,11 +536,11 @@ elif menu == " View Data":
             mime="text/csv",
         )
     else:
-        st.warning(" No data available in this table. Please scrape some data first!")
+        st.warning("⚠️ No data available in this table. Please scrape some data first!")
 
 # WEB EVALUATION APP PAGE
-elif menu == " Web Evaluation App":
-    st.markdown("##  Web Application Evaluation Forms")
+elif menu == "📝 Web Evaluation App":
+    st.markdown("## 📝 Web Application Evaluation Forms")
     
     st.markdown("### Please fill out one of the evaluation forms below:")
     
@@ -540,20 +549,20 @@ elif menu == " Web Evaluation App":
     with col1:
         st.markdown("""
         <div style='background: rgba(26, 32, 44, 0.9); padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(255,215,0,0.3); border: 2px solid #FFD700;'>
-            <h3 style='color: #FFD700;'> Google Form</h3>
+            <h3 style='color: #FFD700;'>📋 Google Form</h3>
             <p style='color: #E2E8F0;'>Evaluate the web application using Google Forms</p>
         </div>
         """, unsafe_allow_html=True)
         
         st.markdown("<br>", unsafe_allow_html=True)
         
-        if st.button(" Open Google Form", key="google", use_container_width=True):
+        if st.button("🔗 Open Google Form", key="google", use_container_width=True):
             st.components.v1.iframe("https://docs.google.com/forms/d/e/1FAIpQLSeL5dzKVxgxD-rOZqLLiDWmIE1dPhBjeeYcrEl3_EcTGeH2zw/viewform?embedded=true", height=800, scrolling=True)
     
     with col2:
         st.markdown("""
         <div style='background: rgba(26, 32, 44, 0.9); padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(255,215,0,0.3); border: 2px solid #FFD700;'>
-            <h3 style='color: #FFD700;'> KoboToolbox Form</h3>
+            <h3 style='color: #FFD700;'>📊 KoboToolbox Form</h3>
             <p style='color: #E2E8F0;'>Evaluate the web application using KoboToolbox</p>
         </div>
         """, unsafe_allow_html=True)
@@ -566,7 +575,7 @@ elif menu == " Web Evaluation App":
     st.markdown("---")
     st.markdown("""
     <div style='background: rgba(26, 32, 44, 0.8); padding: 15px; border-radius: 8px; border-left: 4px solid #FFD700;'>
-        <p style='color: #E2E8F0; margin: 0;'> <strong>Tip:</strong> You can open the forms in a new tab by right-clicking the buttons and selecting 'Open in new tab'</p>
+        <p style='color: #E2E8F0; margin: 0;'>💡 <strong>Tip:</strong> You can open the forms in a new tab by right-clicking the buttons and selecting 'Open in new tab'</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -574,6 +583,6 @@ elif menu == " Web Evaluation App":
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #FFD700; background: rgba(26, 32, 44, 0.8); padding: 15px; border-radius: 10px;'>
-    <p style='margin: 0;'><strong>Made with ❤️ by MARIE| © 2024 DAKA_AUTO_SCRAPER</strong></p>
+    <p style='margin: 0;'><strong>Made with ❤️ by DAKA Team | © 2024 DAKA_AUTO_SCRAPER</strong></p>
 </div>
 """, unsafe_allow_html=True)
