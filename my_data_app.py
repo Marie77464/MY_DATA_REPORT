@@ -9,6 +9,9 @@ def num_page():
 
 st.title("Scraper annonces voitures")
 
+# DEBUG AFFICHE QUAND STREAMLIT PLANTE
+st.write("⚙️ DEBUG - L’application fonctionne")
+
 M = num_page()
 
 df = pd.DataFrame()
@@ -21,7 +24,6 @@ if st.button("Scraper"):
             res = get(url)
             soup = bs(res.content, 'html.parser')
 
-            # NOUVEAU SELECTEUR QUI MARCHE !
             containers = soup.find_all('div', class_='listing-card')
 
             data = []
@@ -47,7 +49,7 @@ if st.button("Scraper"):
                     owner_block = container.find('p', class_='listing-card__author')
                     owner = owner_block.text.replace("Par", "").strip() if owner_block else "N/A"
 
-                    # PRIX (NOUVEAU SELECTEUR)
+                    # PRIX
                     price_block = container.find('div', class_='listing-card__price')
                     price = price_block.text.replace("FCFA", "").strip() if price_block else "N/A"
 
@@ -59,18 +61,30 @@ if st.button("Scraper"):
                         "fuel_type": fuel_type,
                         "gearbox": gearbox,
                         "owner": owner,
-                        "price": price,
+                        "price": price,  # CORRECT (minuscule)
                     }
                     data.append(dic)
 
-                except:
+                except Exception as e:
+                    st.write("Erreur dans un container :", e)
                     pass
 
             DF = pd.DataFrame(data)
             df = pd.concat([df, DF], axis=0).reset_index(drop=True)
 
     st.success("Scraping terminé !")
+    
+    # AFFICHAGE DU DF
+    st.write("Aperçu du dataframe :")
     st.dataframe(df)
 
+    # DEBUG : AFFICHE LES COLONNES POUR ÉVITER LE KEYERROR
+    st.write("Colonnes :", list(df.columns))
+
+    # AFFICHE LES VALEURS DE PRICE SANS CRASH
+    st.write("Distribution des prix :")
+    st.text(df["price"].value_counts().head())
+
+    # BOUTON DE TELECHARGEMENT
     csv = df.to_csv(index=False)
     st.download_button("Télécharger le CSV", data=csv, file_name="annonces.csv", mime="text/csv")
