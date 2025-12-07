@@ -45,7 +45,7 @@ st.markdown("""
     
     /* Sidebar styling */
     [data-testid="stSidebar"] {
-        background: rgba(255, 255, 255, 0.98);
+        background: rgba(255, 182, 217, 0.95);
         backdrop-filter: blur(20px);
         box-shadow: 2px 0 20px rgba(0,0,0,0.3);
     }
@@ -57,33 +57,35 @@ st.markdown("""
     /* Buttons */
     .stButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-        color: #000000;
+        background: linear-gradient(135deg, #FFB6D9 0%, #FF99CC 100%);
+        color: #ffffff;
         border-radius: 12px;
         padding: 0.9rem;
         font-weight: 600;
-        border: 2px solid rgba(0,0,0,0.1);
+        border: 2px solid rgba(255,255,255,0.3);
         transition: all 0.3s ease;
         text-transform: uppercase;
         letter-spacing: 1px;
         font-size: 0.9rem;
+        box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
     }
     
     .stButton>button:hover {
-        background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+        background: linear-gradient(135deg, #FF99CC 0%, #FF69B4 100%);
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        border-color: #000000;
+        box-shadow: 0 8px 25px rgba(255, 105, 180, 0.5);
+        border-color: #ffffff;
     }
     
     .stDownloadButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-        color: #000000;
+        background: linear-gradient(135deg, #FFB6D9 0%, #FF99CC 100%);
+        color: #ffffff;
         border-radius: 12px;
         padding: 0.9rem;
         font-weight: 600;
-        border: 2px solid rgba(0,0,0,0.1);
+        border: 2px solid rgba(255,255,255,0.3);
+        box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
     }
     
     /* Radio buttons in sidebar */
@@ -94,7 +96,7 @@ st.markdown("""
         margin: 0.3rem 0;
         transition: all 0.3s ease;
         font-weight: 500;
-        color: #000000;
+        color: #ffffff;
     }
     
     [data-testid="stSidebar"] .stRadio > div {
@@ -102,7 +104,7 @@ st.markdown("""
     }
     
     [data-testid="stSidebar"] .stRadio label:hover {
-        background: rgba(0,0,0,0.05);
+        background: rgba(255, 255, 255, 0.2);
     }
     
     /* Header styling */
@@ -129,38 +131,38 @@ st.markdown("""
     
     /* Info box */
     .info-box {
-        background: rgba(255, 255, 255, 0.98);
+        background: linear-gradient(135deg, rgba(255, 182, 217, 0.95) 0%, rgba(255, 153, 204, 0.95) 100%);
         padding: 2rem;
         border-radius: 15px;
         margin-bottom: 2rem;
         backdrop-filter: blur(20px);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        box-shadow: 0 8px 32px rgba(255, 105, 180, 0.4);
         border: 1px solid rgba(255,255,255,0.3);
     }
     
     .info-box h3 {
-        color: #000000;
+        color: #ffffff;
         font-weight: 700;
         margin-bottom: 1rem;
         font-size: 1.5rem;
     }
     
     .info-box p, .info-box ul {
-        color: #333333;
+        color: #ffffff;
         line-height: 1.8;
     }
     
     .info-box a {
-        color: #000000;
+        color: #ffffff;
         font-weight: 600;
         text-decoration: none;
-        border-bottom: 2px solid #000000;
+        border-bottom: 2px solid #ffffff;
         transition: all 0.3s ease;
     }
     
     .info-box a:hover {
-        color: #666666;
-        border-bottom-color: #666666;
+        color: #ffe6f0;
+        border-bottom-color: #ffe6f0;
     }
     
     /* Content sections */
@@ -234,8 +236,12 @@ st.markdown("""
     
     /* Sidebar title */
     [data-testid="stSidebar"] h1 {
-        color: #000000;
-        text-shadow: none;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    [data-testid="stSidebar"] .stMarkdown {
+        color: #ffffff;
     }
     
     /* Remove Streamlit branding */
