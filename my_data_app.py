@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup as bs
 from requests import get
 import os
 import glob
+import base64
 
 # Check if plotly is available
 try:
@@ -13,6 +14,17 @@ try:
 except ImportError:
     PLOTLY_AVAILABLE = False
 
+# Function to encode image to base64
+def get_base64_image(image_path):
+    try:
+        with open(image_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode()
+    except:
+        return None
+
+# Load background image
+bg_image = get_base64_image("images/lamborghini_pink.jpg.png")
+
 # Page configuration
 st.set_page_config(
     page_title="Dakar Auto Scraper",
@@ -21,22 +33,37 @@ st.set_page_config(
 )
 
 # Custom CSS for elegant automotive theme
-st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
-    
-    * {
-        font-family: 'Montserrat', sans-serif;
-    }
-    
-    .stApp {
+if bg_image:
+    bg_style = f"""
+    .stApp {{
         background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-                          url('images/lamborghini_pink.jpg.png');
+                          url('data:image/png;base64,{bg_image}');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
+    }}
+    """
+else:
+    # Fallback to a pink/purple gradient if image not found
+    bg_style = """
+    .stApp {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
     }
+    """
+
+st.markdown(f"""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+    
+    * {{
+        font-family: 'Montserrat', sans-serif;
+    }}
+    
+    {bg_style}
     
     .main {
         padding: 2rem;
