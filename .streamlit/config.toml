@@ -1,6 +1,5 @@
 [theme]
-backgroundColor="#ECE1A2"
-secondaryBackgroundColor="#ecdcaa"
-textColor="#0e0f10"
-font="serif"
-
+backgroundColor="transparent"
+secondaryBackgroundColor="rgba(255,255,255,0.1)"
+textColor="#ffffff"
+font="sans serif"
