@@ -4,8 +4,14 @@ from bs4 import BeautifulSoup as bs
 from requests import get
 import os
 import glob
-import plotly.express as px
-import plotly.graph_objects as go
+
+# Check if plotly is available
+try:
+    import plotly.express as px
+    import plotly.graph_objects as go
+    PLOTLY_AVAILABLE = True
+except ImportError:
+    PLOTLY_AVAILABLE = False
 
 # Page configuration
 st.set_page_config(
@@ -299,98 +305,122 @@ elif menu_option == "Dashboard":
                 # Charts section
                 st.subheader("Visual Analytics")
                 
-                # Top brands chart
-                if 'brand' in df.columns:
-                    col1, col2 = st.columns(2)
+                if PLOTLY_AVAILABLE:
+                    # Top brands chart
+                    if 'brand' in df.columns:
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            st.markdown("**Top 10 Brands**")
+                            top_brands = df['brand'].value_counts().head(10).reset_index()
+                            top_brands.columns = ['Brand', 'Count']
+                            fig1 = px.bar(top_brands, x='Brand', y='Count', 
+                                         color='Count',
+                                         color_continuous_scale='Reds')
+                            fig1.update_layout(height=400, showlegend=False)
+                            st.plotly_chart(fig1, use_container_width=True)
+                        
+                        with col2:
+                            st.markdown("**Brand Distribution**")
+                            fig2 = px.pie(top_brands, values='Count', names='Brand',
+                                         color_discrete_sequence=px.colors.sequential.RdBu)
+                            fig2.update_layout(height=400)
+                            st.plotly_chart(fig2, use_container_width=True)
                     
-                    with col1:
+                    # Fuel type and gearbox
+                    if 'fuel_type' in df.columns or 'gearbox' in df.columns:
+                        col1, col2 = st.columns(2)
+                        
+                        if 'fuel_type' in df.columns:
+                            with col1:
+                                st.markdown("**Fuel Type Distribution**")
+                                fuel_counts = df['fuel_type'].value_counts().reset_index()
+                                fuel_counts.columns = ['Fuel Type', 'Count']
+                                fig3 = px.bar(fuel_counts, x='Fuel Type', y='Count',
+                                             color='Count',
+                                             color_continuous_scale='Oranges')
+                                fig3.update_layout(height=400, showlegend=False)
+                                st.plotly_chart(fig3, use_container_width=True)
+                        
+                        if 'gearbox' in df.columns:
+                            with col2:
+                                st.markdown("**Gearbox Type Distribution**")
+                                gearbox_counts = df['gearbox'].value_counts().reset_index()
+                                gearbox_counts.columns = ['Gearbox', 'Count']
+                                fig4 = px.pie(gearbox_counts, values='Count', names='Gearbox',
+                                             color_discrete_sequence=px.colors.sequential.Purples)
+                                fig4.update_layout(height=400)
+                                st.plotly_chart(fig4, use_container_width=True)
+                    
+                    # Price analysis
+                    if 'price' in df.columns:
+                        st.markdown("**Price Analysis**")
+                        df_price = df.copy()
+                        df_price['price_numeric'] = pd.to_numeric(
+                            df_price['price'].astype(str).str.replace(' ', '').str.replace(',', ''), 
+                            errors='coerce'
+                        )
+                        df_price = df_price.dropna(subset=['price_numeric'])
+                        
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            st.markdown("**Price Distribution**")
+                            fig5 = px.histogram(df_price, x='price_numeric', nbins=30,
+                                               color_discrete_sequence=['#FF4B4B'])
+                            fig5.update_layout(height=400, xaxis_title="Price (FCFA)", yaxis_title="Count")
+                            st.plotly_chart(fig5, use_container_width=True)
+                        
+                        with col2:
+                            if 'brand' in df.columns:
+                                st.markdown("**Average Price by Brand (Top 10)**")
+                                top_10_brands = df['brand'].value_counts().head(10).index
+                                df_top_brands = df_price[df_price['brand'].isin(top_10_brands)]
+                                avg_price_by_brand = df_top_brands.groupby('brand')['price_numeric'].mean().sort_values(ascending=False).reset_index()
+                                avg_price_by_brand.columns = ['Brand', 'Average Price']
+                                fig6 = px.bar(avg_price_by_brand, x='Brand', y='Average Price',
+                                             color='Average Price',
+                                             color_continuous_scale='Greens')
+                                fig6.update_layout(height=400, showlegend=False)
+                                st.plotly_chart(fig6, use_container_width=True)
+                    
+                    # Year analysis
+                    if 'year' in df.columns:
+                        st.markdown("**Year Analysis**")
+                        df_year = df.copy()
+                        df_year['year_numeric'] = pd.to_numeric(df_year['year'], errors='coerce')
+                        df_year = df_year.dropna(subset=['year_numeric'])
+                        
+                        year_counts = df_year['year_numeric'].value_counts().sort_index().reset_index()
+                        year_counts.columns = ['Year', 'Count']
+                        
+                        fig7 = px.line(year_counts, x='Year', y='Count', markers=True,
+                                      color_discrete_sequence=['#FF4B4B'])
+                        fig7.update_layout(height=400, xaxis_title="Year", yaxis_title="Number of Listings")
+                        st.plotly_chart(fig7, use_container_width=True)
+                else:
+                    # Fallback to basic charts using streamlit native charts
+                    st.warning("Plotly not installed. Install it with: pip install plotly")
+                    
+                    if 'brand' in df.columns:
                         st.markdown("**Top 10 Brands**")
-                        top_brands = df['brand'].value_counts().head(10).reset_index()
-                        top_brands.columns = ['Brand', 'Count']
-                        fig1 = px.bar(top_brands, x='Brand', y='Count', 
-                                     color='Count',
-                                     color_continuous_scale='Reds')
-                        fig1.update_layout(height=400, showlegend=False)
-                        st.plotly_chart(fig1, use_container_width=True)
-                    
-                    with col2:
-                        st.markdown("**Brand Distribution**")
-                        fig2 = px.pie(top_brands, values='Count', names='Brand',
-                                     color_discrete_sequence=px.colors.sequential.RdBu)
-                        fig2.update_layout(height=400)
-                        st.plotly_chart(fig2, use_container_width=True)
-                
-                # Fuel type and gearbox
-                if 'fuel_type' in df.columns or 'gearbox' in df.columns:
-                    col1, col2 = st.columns(2)
+                        top_brands = df['brand'].value_counts().head(10)
+                        st.bar_chart(top_brands)
                     
                     if 'fuel_type' in df.columns:
-                        with col1:
-                            st.markdown("**Fuel Type Distribution**")
-                            fuel_counts = df['fuel_type'].value_counts().reset_index()
-                            fuel_counts.columns = ['Fuel Type', 'Count']
-                            fig3 = px.bar(fuel_counts, x='Fuel Type', y='Count',
-                                         color='Count',
-                                         color_continuous_scale='Oranges')
-                            fig3.update_layout(height=400, showlegend=False)
-                            st.plotly_chart(fig3, use_container_width=True)
+                        st.markdown("**Fuel Type Distribution**")
+                        fuel_counts = df['fuel_type'].value_counts()
+                        st.bar_chart(fuel_counts)
                     
                     if 'gearbox' in df.columns:
-                        with col2:
-                            st.markdown("**Gearbox Type Distribution**")
-                            gearbox_counts = df['gearbox'].value_counts().reset_index()
-                            gearbox_counts.columns = ['Gearbox', 'Count']
-                            fig4 = px.pie(gearbox_counts, values='Count', names='Gearbox',
-                                         color_discrete_sequence=px.colors.sequential.Purples)
-                            fig4.update_layout(height=400)
-                            st.plotly_chart(fig4, use_container_width=True)
-                
-                # Price analysis
-                if 'price' in df.columns:
-                    st.markdown("**Price Analysis**")
-                    df_price = df.copy()
-                    df_price['price_numeric'] = pd.to_numeric(
-                        df_price['price'].astype(str).str.replace(' ', '').str.replace(',', ''), 
-                        errors='coerce'
-                    )
-                    df_price = df_price.dropna(subset=['price_numeric'])
+                        st.markdown("**Gearbox Type Distribution**")
+                        gearbox_counts = df['gearbox'].value_counts()
+                        st.bar_chart(gearbox_counts)
                     
-                    col1, col2 = st.columns(2)
-                    
-                    with col1:
-                        st.markdown("**Price Distribution**")
-                        fig5 = px.histogram(df_price, x='price_numeric', nbins=30,
-                                           color_discrete_sequence=['#FF4B4B'])
-                        fig5.update_layout(height=400, xaxis_title="Price (FCFA)", yaxis_title="Count")
-                        st.plotly_chart(fig5, use_container_width=True)
-                    
-                    with col2:
-                        if 'brand' in df.columns:
-                            st.markdown("**Average Price by Brand (Top 10)**")
-                            top_10_brands = df['brand'].value_counts().head(10).index
-                            df_top_brands = df_price[df_price['brand'].isin(top_10_brands)]
-                            avg_price_by_brand = df_top_brands.groupby('brand')['price_numeric'].mean().sort_values(ascending=False).reset_index()
-                            avg_price_by_brand.columns = ['Brand', 'Average Price']
-                            fig6 = px.bar(avg_price_by_brand, x='Brand', y='Average Price',
-                                         color='Average Price',
-                                         color_continuous_scale='Greens')
-                            fig6.update_layout(height=400, showlegend=False)
-                            st.plotly_chart(fig6, use_container_width=True)
-                
-                # Year analysis
-                if 'year' in df.columns:
-                    st.markdown("**Year Analysis**")
-                    df_year = df.copy()
-                    df_year['year_numeric'] = pd.to_numeric(df_year['year'], errors='coerce')
-                    df_year = df_year.dropna(subset=['year_numeric'])
-                    
-                    year_counts = df_year['year_numeric'].value_counts().sort_index().reset_index()
-                    year_counts.columns = ['Year', 'Count']
-                    
-                    fig7 = px.line(year_counts, x='Year', y='Count', markers=True,
-                                  color_discrete_sequence=['#FF4B4B'])
-                    fig7.update_layout(height=400, xaxis_title="Year", yaxis_title="Number of Listings")
-                    st.plotly_chart(fig7, use_container_width=True)
+                    if 'year' in df.columns:
+                        st.markdown("**Year Distribution**")
+                        year_counts = df['year'].value_counts().sort_index()
+                        st.line_chart(year_counts)
                 
         else:
             st.warning("No CSV files found in the 'data/' folder")
