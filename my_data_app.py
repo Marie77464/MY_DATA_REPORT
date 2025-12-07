@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup as bs
 from requests import get
 import os
 import glob
-import base64
 
 # Check if plotly is available
 try:
@@ -14,17 +13,6 @@ try:
 except ImportError:
     PLOTLY_AVAILABLE = False
 
-# Function to encode image to base64
-def get_base64_image(image_path):
-    try:
-        with open(image_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode()
-    except:
-        return None
-
-# Load background image
-bg_image = get_base64_image("images/lamborghini_pink.jpg.png")
-
 # Page configuration
 st.set_page_config(
     page_title="Dakar Auto Scraper",
@@ -32,115 +20,95 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS for elegant automotive theme
-if bg_image:
-    bg_style = f"""
-    .stApp {{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-                          url('data:image/png;base64,{bg_image}');
+# Custom CSS for elegant automotive theme with pink Lamborghini background
+st.markdown("""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+    
+    * {
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    .stApp {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                          url('https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=1920&q=80');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-    }}
-    """
-else:
-    # Fallback to a pink/purple gradient if image not found
-    bg_style = """
-    .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
     }
-    """
-
-st.markdown(f"""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
-    
-    * {{
-        font-family: 'Montserrat', sans-serif;
-    }}
-    
-    {bg_style}
-    
-    .main {{
-        padding: 2rem;
-        background-color: transparent;
-    }}
     
     .main {
         padding: 2rem;
         background-color: transparent;
     }
     
-    /* Sidebar styling */
-    [data-testid="stSidebar"] {{
-        background: rgba(255, 182, 217, 0.95);
+    /* Sidebar styling - WHITE */
+    [data-testid="stSidebar"] {
+        background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(20px);
         box-shadow: 2px 0 20px rgba(0,0,0,0.3);
-    }}
+    }
     
-    [data-testid="stSidebar"] > div:first-child {{
+    [data-testid="stSidebar"] > div:first-child {
         padding-top: 2rem;
-    }}
+    }
     
-    /* Buttons */
-    .stButton>button {{
+    /* Buttons - WHITE */
+    .stButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #FFB6D9 0%, #FF99CC 100%);
-        color: #ffffff;
+        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+        color: #000000;
         border-radius: 12px;
         padding: 0.9rem;
         font-weight: 600;
-        border: 2px solid rgba(255,255,255,0.3);
+        border: 2px solid rgba(0,0,0,0.1);
         transition: all 0.3s ease;
         text-transform: uppercase;
         letter-spacing: 1px;
         font-size: 0.9rem;
-        box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-    }}
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
     
-    .stButton>button:hover {{
-        background: linear-gradient(135deg, #FF99CC 0%, #FF69B4 100%);
+    .stButton>button:hover {
+        background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(255, 105, 180, 0.5);
-        border-color: #ffffff;
-    }}
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        border-color: #000000;
+    }
     
-    .stDownloadButton>button {{
+    .stDownloadButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #FFB6D9 0%, #FF99CC 100%);
-        color: #ffffff;
+        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+        color: #000000;
         border-radius: 12px;
         padding: 0.9rem;
         font-weight: 600;
-        border: 2px solid rgba(255,255,255,0.3);
-        box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-    }}
+        border: 2px solid rgba(0,0,0,0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
     
-    /* Radio buttons in sidebar */
-    [data-testid="stSidebar"] .stRadio > label {{
+    /* Radio buttons in sidebar - WHITE */
+    [data-testid="stSidebar"] .stRadio > label {
         background: transparent;
         padding: 0.8rem 1rem;
         border-radius: 10px;
         margin: 0.3rem 0;
         transition: all 0.3s ease;
         font-weight: 500;
-        color: #ffffff;
-    }}
+        color: #000000;
+    }
     
-    [data-testid="stSidebar"] .stRadio > div {{
+    [data-testid="stSidebar"] .stRadio > div {
         gap: 0.5rem;
-    }}
+    }
     
-    [data-testid="stSidebar"] .stRadio label:hover {{
-        background: rgba(255, 255, 255, 0.2);
-    }}
+    [data-testid="stSidebar"] .stRadio label:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
     
     /* Header styling */
-    .header-style {{
+    .header-style {
         font-size: 4rem;
         font-weight: 700;
         color: #ffffff;
@@ -149,9 +117,9 @@ st.markdown(f"""
         text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
         letter-spacing: 2px;
         text-transform: uppercase;
-    }}
+    }
     
-    .subheader-style {{
+    .subheader-style {
         font-size: 1.3rem;
         color: #ffffff;
         text-align: center;
@@ -159,126 +127,126 @@ st.markdown(f"""
         text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         font-weight: 300;
         letter-spacing: 1px;
-    }}
+    }
     
-    /* Info box */
-    .info-box {{
-        background: linear-gradient(135deg, rgba(255, 182, 217, 0.95) 0%, rgba(255, 153, 204, 0.95) 100%);
+    /* Info box - WHITE */
+    .info-box {
+        background: rgba(255, 255, 255, 0.98);
         padding: 2rem;
         border-radius: 15px;
         margin-bottom: 2rem;
         backdrop-filter: blur(20px);
-        box-shadow: 0 8px 32px rgba(255, 105, 180, 0.4);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(255,255,255,0.3);
-    }}
+    }
     
-    .info-box h3 {{
-        color: #ffffff;
+    .info-box h3 {
+        color: #000000;
         font-weight: 700;
         margin-bottom: 1rem;
         font-size: 1.5rem;
-    }}
+    }
     
-    .info-box p, .info-box ul {{
-        color: #ffffff;
+    .info-box p, .info-box ul {
+        color: #333333;
         line-height: 1.8;
-    }}
+    }
     
-    .info-box a {{
-        color: #ffffff;
+    .info-box a {
+        color: #000000;
         font-weight: 600;
         text-decoration: none;
-        border-bottom: 2px solid #ffffff;
+        border-bottom: 2px solid #000000;
         transition: all 0.3s ease;
-    }}
+    }
     
-    .info-box a:hover {{
-        color: #ffe6f0;
-        border-bottom-color: #ffe6f0;
-    }}
+    .info-box a:hover {
+        color: #666666;
+        border-bottom-color: #666666;
+    }
     
-    /* Content sections */
-    .stDataFrame {{
+    /* Content sections - WHITE */
+    .stDataFrame {
         background: rgba(255, 255, 255, 0.98);
         border-radius: 12px;
         padding: 1.5rem;
         box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }}
+    }
     
-    /* Metrics */
-    div[data-testid="stMetricValue"] {{
+    /* Metrics - WHITE */
+    div[data-testid="stMetricValue"] {
         background: rgba(255, 255, 255, 0.95);
         padding: 1rem;
         border-radius: 10px;
         font-weight: 700;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }}
+    }
     
-    div[data-testid="stMetricLabel"] {{
+    div[data-testid="stMetricLabel"] {
         color: #ffffff;
         font-weight: 600;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    }}
+    }
     
     /* Headers */
-    h1, h2, h3 {{
+    h1, h2, h3 {
         color: #ffffff;
         text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
         font-weight: 700;
-    }}
+    }
     
     /* Text elements */
-    .stMarkdown {{
+    .stMarkdown {
         color: #ffffff;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    }}
+    }
     
-    /* Input fields */
-    .stNumberInput > div > div > input {{
+    /* Input fields - WHITE */
+    .stNumberInput > div > div > input {
         background: rgba(255, 255, 255, 0.95);
         border-radius: 10px;
         border: 2px solid rgba(0,0,0,0.1);
         font-weight: 600;
-    }}
+    }
     
-    .stSelectbox > div > div {{
+    .stSelectbox > div > div {
         background: rgba(255, 255, 255, 0.95);
         border-radius: 10px;
-    }}
+    }
     
-    /* Expander */
-    .streamlit-expanderHeader {{
+    /* Expander - WHITE */
+    .streamlit-expanderHeader {
         background: rgba(255, 255, 255, 0.95);
         border-radius: 10px;
         font-weight: 600;
-    }}
+    }
     
-    /* Progress bar */
-    .stProgress > div > div > div {{
+    /* Progress bar - WHITE/GREY */
+    .stProgress > div > div > div {
         background: linear-gradient(90deg, #ffffff 0%, #cccccc 100%);
-    }}
+    }
     
-    /* Success/Warning/Info messages */
-    .stSuccess, .stWarning, .stInfo, .stError {{
+    /* Success/Warning/Info messages - WHITE */
+    .stSuccess, .stWarning, .stInfo, .stError {
         background: rgba(255, 255, 255, 0.95);
         color: #000000;
         border-radius: 10px;
         backdrop-filter: blur(10px);
-    }}
+    }
     
-    /* Sidebar title */
-    [data-testid="stSidebar"] h1 {{
-        color: #ffffff;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }}
+    /* Sidebar title - BLACK on WHITE */
+    [data-testid="stSidebar"] h1 {
+        color: #000000;
+        text-shadow: none;
+    }
     
-    [data-testid="stSidebar"] .stMarkdown {{
-        color: #ffffff;
-    }}
+    [data-testid="stSidebar"] .stMarkdown {
+        color: #000000;
+    }
     
     /* Remove Streamlit branding */
-    #MainMenu {{visibility: hidden;}}
-    footer {{visibility: hidden;}}
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
     
     </style>
 """, unsafe_allow_html=True)
