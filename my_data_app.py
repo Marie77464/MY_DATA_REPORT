@@ -58,7 +58,6 @@ st.markdown("""
         box-shadow: 0 0 18px rgba(255, 70, 160, 1);
     }
 
-    /* TABLE THEME */
     .stDataFrame table, .stDataFrame td, .stDataFrame th {
         background-color: white !important;
         color: black !important;
@@ -76,7 +75,6 @@ st.markdown("""
 
 # BACKGROUND CONTAINER
 st.markdown("<div class='app-bg'>", unsafe_allow_html=True)
-
 
 # ==================== TITLE ====================
 st.markdown("<h1>DAKAR AUTO SCRAPER</h1>", unsafe_allow_html=True)
@@ -108,3 +106,87 @@ def scrape_data(pages):
         url = f"https://dakar-auto.com/senegal/voitures-4?page={p}"
 
         try:
+            response = get(url)
+            soup = bs(response.text, "html.parser")
+
+            cars = soup.find_all("div", class_="ads-list-details")
+
+            for car in cars:
+                title = car.find("h2").text.strip() if car.find("h2") else "N/A"
+                price = car.find("span", class_="ads-price").text.strip() if car.find("span", class_="ads-price") else "N/A"
+                location = car.find("span", class_="location").text.strip() if car.find("span", "location") else "N/A"
+
+                all_data.append({
+                    "Title": title,
+                    "Price": price,
+                    "Location": location
+                })
+
+        except Exception as e:
+            st.error(f"Error scraping page {p}: {e}")
+
+    return pd.DataFrame(all_data)
+
+
+# ==================== SCRAPE DATA PAGE ====================
+if menu == "Scrape Data":
+    st.subheader("Scrape Dakar-Auto.com Cars")
+
+    pages = st.number_input("Number of pages to scrape", 1, 20, 5)
+
+    if st.button("Start Scraping"):
+        df = scrape_data(pages)
+        st.session_state.df = df
+
+        st.success("Scraping Completed!")
+        st.dataframe(df)
+
+        df.to_csv("scraped_cars.csv", index=False)
+        st.download_button(
+            "Download CSV",
+            data=df.to_csv().encode("utf-8"),
+            file_name="cars_data.csv",
+            mime="text/csv"
+        )
+
+# ==================== DOWNLOAD PAGE ====================
+elif menu == "Download Pre-scraped Data":
+    st.subheader("Download Previously Scraped Files")
+
+    files = glob.glob("*.csv")
+    if not files:
+        st.warning("No files found.")
+    else:
+        for f in files:
+            with open(f, "rb") as file:
+                st.download_button(
+                    label=f"Download {f}",
+                    data=file,
+                    file_name=f,
+                    mime="text/csv"
+                )
+
+# ==================== DASHBOARD ====================
+elif menu == "Dashboard":
+    st.subheader("Data Summary Dashboard")
+
+    if st.session_state.df is None:
+        st.warning("You must scrape data first.")
+    else:
+        df = st.session_state.df
+
+        st.write("### Total Cars Found:", len(df))
+        st.write("### Sample Preview:")
+        st.dataframe(df.head())
+
+        st.write("### Price Distribution (Text Format - Needs Cleaning)")
+        st.text(df["Price"].value_counts().head())
+
+# ==================== APP EVALUATION ====================
+elif menu == "App Evaluation":
+    st.subheader("Rate This Application")
+    note = st.slider("Your rating:", 1, 10, 8)
+    st.write("Thank you for rating:", note)
+
+# END BACKGROUND
+st.markdown("</div>", unsafe_allow_html=True)
