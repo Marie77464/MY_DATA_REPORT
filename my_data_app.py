@@ -65,24 +65,29 @@ st.markdown(f"""
     
     {bg_style}
     
+    .main {{
+        padding: 2rem;
+        background-color: transparent;
+    }}
+    
     .main {
         padding: 2rem;
         background-color: transparent;
     }
     
     /* Sidebar styling */
-    [data-testid="stSidebar"] {
+    [data-testid="stSidebar"] {{
         background: rgba(255, 182, 217, 0.95);
         backdrop-filter: blur(20px);
         box-shadow: 2px 0 20px rgba(0,0,0,0.3);
-    }
+    }}
     
-    [data-testid="stSidebar"] > div:first-child {
+    [data-testid="stSidebar"] > div:first-child {{
         padding-top: 2rem;
-    }
+    }}
     
     /* Buttons */
-    .stButton>button {
+    .stButton>button {{
         width: 100%;
         background: linear-gradient(135deg, #FFB6D9 0%, #FF99CC 100%);
         color: #ffffff;
@@ -95,16 +100,16 @@ st.markdown(f"""
         letter-spacing: 1px;
         font-size: 0.9rem;
         box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-    }
+    }}
     
-    .stButton>button:hover {
+    .stButton>button:hover {{
         background: linear-gradient(135deg, #FF99CC 0%, #FF69B4 100%);
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(255, 105, 180, 0.5);
         border-color: #ffffff;
-    }
+    }}
     
-    .stDownloadButton>button {
+    .stDownloadButton>button {{
         width: 100%;
         background: linear-gradient(135deg, #FFB6D9 0%, #FF99CC 100%);
         color: #ffffff;
@@ -113,10 +118,10 @@ st.markdown(f"""
         font-weight: 600;
         border: 2px solid rgba(255,255,255,0.3);
         box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-    }
+    }}
     
     /* Radio buttons in sidebar */
-    [data-testid="stSidebar"] .stRadio > label {
+    [data-testid="stSidebar"] .stRadio > label {{
         background: transparent;
         padding: 0.8rem 1rem;
         border-radius: 10px;
@@ -124,18 +129,18 @@ st.markdown(f"""
         transition: all 0.3s ease;
         font-weight: 500;
         color: #ffffff;
-    }
+    }}
     
-    [data-testid="stSidebar"] .stRadio > div {
+    [data-testid="stSidebar"] .stRadio > div {{
         gap: 0.5rem;
-    }
+    }}
     
-    [data-testid="stSidebar"] .stRadio label:hover {
+    [data-testid="stSidebar"] .stRadio label:hover {{
         background: rgba(255, 255, 255, 0.2);
-    }
+    }}
     
     /* Header styling */
-    .header-style {
+    .header-style {{
         font-size: 4rem;
         font-weight: 700;
         color: #ffffff;
@@ -144,9 +149,9 @@ st.markdown(f"""
         text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
         letter-spacing: 2px;
         text-transform: uppercase;
-    }
+    }}
     
-    .subheader-style {
+    .subheader-style {{
         font-size: 1.3rem;
         color: #ffffff;
         text-align: center;
@@ -154,10 +159,10 @@ st.markdown(f"""
         text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         font-weight: 300;
         letter-spacing: 1px;
-    }
+    }}
     
     /* Info box */
-    .info-box {
+    .info-box {{
         background: linear-gradient(135deg, rgba(255, 182, 217, 0.95) 0%, rgba(255, 153, 204, 0.95) 100%);
         padding: 2rem;
         border-radius: 15px;
@@ -165,115 +170,115 @@ st.markdown(f"""
         backdrop-filter: blur(20px);
         box-shadow: 0 8px 32px rgba(255, 105, 180, 0.4);
         border: 1px solid rgba(255,255,255,0.3);
-    }
+    }}
     
-    .info-box h3 {
+    .info-box h3 {{
         color: #ffffff;
         font-weight: 700;
         margin-bottom: 1rem;
         font-size: 1.5rem;
-    }
+    }}
     
-    .info-box p, .info-box ul {
+    .info-box p, .info-box ul {{
         color: #ffffff;
         line-height: 1.8;
-    }
+    }}
     
-    .info-box a {
+    .info-box a {{
         color: #ffffff;
         font-weight: 600;
         text-decoration: none;
         border-bottom: 2px solid #ffffff;
         transition: all 0.3s ease;
-    }
+    }}
     
-    .info-box a:hover {
+    .info-box a:hover {{
         color: #ffe6f0;
         border-bottom-color: #ffe6f0;
-    }
+    }}
     
     /* Content sections */
-    .stDataFrame {
+    .stDataFrame {{
         background: rgba(255, 255, 255, 0.98);
         border-radius: 12px;
         padding: 1.5rem;
         box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
+    }}
     
     /* Metrics */
-    div[data-testid="stMetricValue"] {
+    div[data-testid="stMetricValue"] {{
         background: rgba(255, 255, 255, 0.95);
         padding: 1rem;
         border-radius: 10px;
         font-weight: 700;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+    }}
     
-    div[data-testid="stMetricLabel"] {
+    div[data-testid="stMetricLabel"] {{
         color: #ffffff;
         font-weight: 600;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    }
+    }}
     
     /* Headers */
-    h1, h2, h3 {
+    h1, h2, h3 {{
         color: #ffffff;
         text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
         font-weight: 700;
-    }
+    }}
     
     /* Text elements */
-    .stMarkdown {
+    .stMarkdown {{
         color: #ffffff;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    }
+    }}
     
     /* Input fields */
-    .stNumberInput > div > div > input {
+    .stNumberInput > div > div > input {{
         background: rgba(255, 255, 255, 0.95);
         border-radius: 10px;
         border: 2px solid rgba(0,0,0,0.1);
         font-weight: 600;
-    }
+    }}
     
-    .stSelectbox > div > div {
+    .stSelectbox > div > div {{
         background: rgba(255, 255, 255, 0.95);
         border-radius: 10px;
-    }
+    }}
     
     /* Expander */
-    .streamlit-expanderHeader {
+    .streamlit-expanderHeader {{
         background: rgba(255, 255, 255, 0.95);
         border-radius: 10px;
         font-weight: 600;
-    }
+    }}
     
     /* Progress bar */
-    .stProgress > div > div > div {
+    .stProgress > div > div > div {{
         background: linear-gradient(90deg, #ffffff 0%, #cccccc 100%);
-    }
+    }}
     
     /* Success/Warning/Info messages */
-    .stSuccess, .stWarning, .stInfo, .stError {
+    .stSuccess, .stWarning, .stInfo, .stError {{
         background: rgba(255, 255, 255, 0.95);
         color: #000000;
         border-radius: 10px;
         backdrop-filter: blur(10px);
-    }
+    }}
     
     /* Sidebar title */
-    [data-testid="stSidebar"] h1 {
+    [data-testid="stSidebar"] h1 {{
         color: #ffffff;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
+    }}
     
-    [data-testid="stSidebar"] .stMarkdown {
+    [data-testid="stSidebar"] .stMarkdown {{
         color: #ffffff;
-    }
+    }}
     
     /* Remove Streamlit branding */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+    #MainMenu {{visibility: hidden;}}
+    footer {{visibility: hidden;}}
     
     </style>
 """, unsafe_allow_html=True)
