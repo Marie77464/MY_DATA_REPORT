@@ -20,15 +20,20 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS for styling
+# Custom CSS for styling with background image
 st.markdown("""
     <style>
+    .stApp {
+        background-image: linear-gradient(rgba(255, 229, 229, 0.85), rgba(255, 229, 229, 0.85)), 
+                          url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
     .main {
         padding: 2rem;
-        background-color: #FFE5E5;
-    }
-    .stApp {
-        background-color: #FFE5E5;
+        background-color: transparent;
     }
     .stButton>button {
         width: 100%;
@@ -66,14 +71,26 @@ st.markdown("""
         margin-bottom: 2rem;
     }
     .info-box {
-        background-color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.95);
         padding: 1.5rem;
         border-radius: 10px;
         border-left: 5px solid #FF4B4B;
         margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
     }
     [data-testid="stSidebar"] {
-        background-color: #FFD6D6;
+        background-color: rgba(255, 214, 214, 0.95);
+        backdrop-filter: blur(10px);
+    }
+    .stDataFrame {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        padding: 1rem;
+    }
+    div[data-testid="stMetricValue"] {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 0.5rem;
+        border-radius: 5px;
     }
     </style>
 """, unsafe_allow_html=True)
