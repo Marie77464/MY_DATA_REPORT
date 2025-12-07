@@ -24,7 +24,7 @@ st.set_page_config(
 st.markdown("""
     <style>
     .stApp {
-        background-image: linear-gradient(rgba(255, 229, 229, 0.85), rgba(255, 229, 229, 0.85)), 
+        background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
                           url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920');
         background-size: cover;
         background-position: center;
@@ -79,7 +79,7 @@ st.markdown("""
         backdrop-filter: blur(10px);
     }
     [data-testid="stSidebar"] {
-        background-color: rgba(255, 214, 214, 0.95);
+        background-color: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
     }
     .stDataFrame {
