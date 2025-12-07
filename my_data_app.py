@@ -9,50 +9,46 @@ def num_page():
 
 st.title("Scraper annonces voitures")
 
-# DEBUG AFFICHE QUAND STREAMLIT PLANTE
-st.write("⚙️ DEBUG - L’application fonctionne")
-
 M = num_page()
 
 df = pd.DataFrame()
 
 if st.button("Scraper"):
     with st.spinner("Scraping en cours..."):
+        # loop over pages indexes
         for index in range(1, M+1):
-
-            url = f'https://dakar-auto.com/senegal/voitures-4?page={index}'
+            url = 'https://dakar-auto.com/senegal/voitures-4'
+            # get the html code of the page using the get function requests
             res = get(url)
+            res
+            # store the html code dans un objet BeautifulSoup avec html parser
             soup = bs(res.content, 'html.parser')
-
-            containers = soup.find_all('div', class_='listing-card')
-
+            # get all containers that contains the informations of each car
+            containers = soup.find_all('div', class_='listings-cards__list-item mb-md-3 mb-3')
+            # scrape data from all the containers
             data = []
             for container in containers:
                 try:
-                    # TITRE
-                    title = container.find('h2', class_='listing-card__title')
-                    gen_inf = title.text.strip().split()
-
+                    gen_inf = container.find('h2', class_='listing-card__header__title mb-md-2 mb-0').a.text.strip().split()
+                    # get the brand
                     brand = gen_inf[0]
+                    # get the model
                     model = " ".join(gen_inf[1:len(gen_inf)-1])
+                    # get the year
                     year = gen_inf[-1]
-
-                    # CARACTÉRISTIQUES
-                    attrs = container.find('ul', class_='listing-card__attributes')
-                    li = attrs.find_all('li')
-
-                    kms_driven = li[1].text.replace("km", "") if len(li) > 1 else "N/A"
-                    gearbox = li[2].text if len(li) > 2 else "N/A"
-                    fuel_type = li[3].text if len(li) > 3 else "N/A"
-
-                    # PROPRIÉTAIRE
-                    owner_block = container.find('p', class_='listing-card__author')
-                    owner = owner_block.text.replace("Par", "").strip() if owner_block else "N/A"
-
-                    # PRIX
-                    price_block = container.find('div', class_='listing-card__price')
-                    price = price_block.text.replace("FCFA", "").strip() if price_block else "N/A"
-
+                    # Scrape the kilometer, fuel type and gearbox type
+                    gen_inf1 = container.find('ul', 'listing-card__attribute-list list-inline mb-0')
+                    gen_inf2 = gen_inf1.find_all('li', 'listing-card__attribute list-inline-item')
+                    # get kilometer driven
+                    kms_driven = gen_inf2[1].text.replace('km', '')
+                    # get the gearbox
+                    gearbox = gen_inf2[2].text
+                    # get fuel type
+                    fuel_type = gen_inf2[3].text
+                    # scrape owner
+                    owner = "".join(container.find('p', class_='time-author m-0').a.text).replace('Par', '')
+                    # scrape the price
+                    price = "".join(container.find('h3', 'listing-card__header__price font-weight-bold text-uppercase mb-0').text.strip().split()).replace('FCFA', '')
                     dic = {
                         "brand": brand,
                         "model": model,
@@ -61,30 +57,17 @@ if st.button("Scraper"):
                         "fuel_type": fuel_type,
                         "gearbox": gearbox,
                         "owner": owner,
-                        "price": price,  # CORRECT (minuscule)
+                        "price": price,
                     }
                     data.append(dic)
-
-                except Exception as e:
-                    st.write("Erreur dans un container :", e)
+                except:
                     pass
-
             DF = pd.DataFrame(data)
             df = pd.concat([df, DF], axis=0).reset_index(drop=True)
 
     st.success("Scraping terminé !")
-    
-    # AFFICHAGE DU DF
-    st.write("Aperçu du dataframe :")
     st.dataframe(df)
 
-    # DEBUG : AFFICHE LES COLONNES POUR ÉVITER LE KEYERROR
-    st.write("Colonnes :", list(df.columns))
-
-    # AFFICHE LES VALEURS DE PRICE SANS CRASH
-    st.write("Distribution des prix :")
-    st.text(df["price"].value_counts().head())
-
-    # BOUTON DE TELECHARGEMENT
+    # Optionnel : proposer de télécharger le résultat en CSV
     csv = df.to_csv(index=False)
     st.download_button("Télécharger le CSV", data=csv, file_name="annonces.csv", mime="text/csv")
