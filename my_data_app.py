@@ -42,9 +42,9 @@ st.markdown("""
         background-color: transparent;
     }
     
-    /* Sidebar styling - WHITE */
+    /* Sidebar styling - MODERN GRADIENT */
     [data-testid="stSidebar"] {
-        background: rgba(255, 255, 255, 0.98);
+        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
         backdrop-filter: blur(20px);
         box-shadow: 2px 0 20px rgba(0,0,0,0.3);
     }
@@ -53,49 +53,49 @@ st.markdown("""
         padding-top: 2rem;
     }
     
-    /* Buttons - WHITE */
+    /* Buttons - VIBRANT GRADIENT */
     .stButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-        color: #000000;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: #ffffff;
         border-radius: 12px;
         padding: 0.9rem;
         font-weight: 600;
-        border: 2px solid rgba(0,0,0,0.1);
+        border: 2px solid rgba(255,255,255,0.3);
         transition: all 0.3s ease;
         text-transform: uppercase;
         letter-spacing: 1px;
         font-size: 0.9rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
     }
     
     .stButton>button:hover {
-        background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+        background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        border-color: #000000;
+        box-shadow: 0 8px 25px rgba(245, 87, 108, 0.6);
+        border-color: #ffffff;
     }
     
     .stDownloadButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-        color: #000000;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: #ffffff;
         border-radius: 12px;
         padding: 0.9rem;
         font-weight: 600;
-        border: 2px solid rgba(0,0,0,0.1);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        border: 2px solid rgba(255,255,255,0.3);
+        box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
     }
     
-    /* Radio buttons in sidebar - WHITE */
+    /* Radio buttons in sidebar - WHITE ON GRADIENT */
     [data-testid="stSidebar"] .stRadio > label {
-        background: transparent;
+        background: rgba(255, 255, 255, 0.1);
         padding: 0.8rem 1rem;
         border-radius: 10px;
         margin: 0.3rem 0;
         transition: all 0.3s ease;
         font-weight: 500;
-        color: #000000;
+        color: #ffffff;
     }
     
     [data-testid="stSidebar"] .stRadio > div {
@@ -103,7 +103,8 @@ st.markdown("""
     }
     
     [data-testid="stSidebar"] .stRadio label:hover {
-        background: rgba(0, 0, 0, 0.05);
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateX(5px);
     }
     
     /* Header styling */
@@ -128,40 +129,40 @@ st.markdown("""
         letter-spacing: 1px;
     }
     
-    /* Info box - WHITE */
+    /* Info box - COLORFUL GRADIENT */
     .info-box {
-        background: rgba(255, 255, 255, 0.98);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
         padding: 2rem;
         border-radius: 15px;
         margin-bottom: 2rem;
         backdrop-filter: blur(20px);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.5);
         border: 1px solid rgba(255,255,255,0.3);
     }
     
     .info-box h3 {
-        color: #000000;
+        color: #ffffff;
         font-weight: 700;
         margin-bottom: 1rem;
         font-size: 1.5rem;
     }
     
     .info-box p, .info-box ul {
-        color: #333333;
+        color: #ffffff;
         line-height: 1.8;
     }
     
     .info-box a {
-        color: #000000;
+        color: #ffffff;
         font-weight: 600;
         text-decoration: none;
-        border-bottom: 2px solid #000000;
+        border-bottom: 2px solid #ffffff;
         transition: all 0.3s ease;
     }
     
     .info-box a:hover {
-        color: #666666;
-        border-bottom-color: #666666;
+        color: #f093fb;
+        border-bottom-color: #f093fb;
     }
     
     /* Content sections - WHITE */
@@ -233,14 +234,20 @@ st.markdown("""
         backdrop-filter: blur(10px);
     }
     
-    /* Sidebar title - BLACK on WHITE */
+    /* Sidebar title - WHITE ON GRADIENT */
     [data-testid="stSidebar"] h1 {
-        color: #000000;
-        text-shadow: none;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
     
     [data-testid="stSidebar"] .stMarkdown {
-        color: #000000;
+        color: #ffffff;
+    }
+    
+    [data-testid="stSidebar"] .stInfo {
+        background: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        border-radius: 10px;
     }
     
     /* Remove Streamlit branding */
@@ -251,24 +258,33 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Header
-st.markdown('<p class="header-style">MY BEST DATA APP</p>', unsafe_allow_html=True)
-st.markdown('<p class="subheader-style">Premium Web Scraping & Data Analytics Platform</p>', unsafe_allow_html=True)
+st.markdown('<p class="header-style">🚗 DAKAR AUTO SCRAPER</p>', unsafe_allow_html=True)
+st.markdown('<p class="subheader-style">Welcome to the Ultimate Car Data Extraction Platform</p>', unsafe_allow_html=True)
 
-# Description
+# Welcome message
 st.markdown("""
     <div class="info-box">
-    <h3>About This Application</h3>
-    <p>This app performs webscraping of data from <strong>dakar-auto</strong> over multiple pages. 
-    You can also download pre-scraped data from the app directly without scraping them.</p>
+    <h3>👋 Welcome!</h3>
+    <p>Welcome to <strong>Dakar Auto Scraper</strong> - your professional tool designed specifically to extract and analyze vehicle data from <strong>Dakar-Auto.com</strong>, Senegal's leading automotive marketplace!</p>
     
-    <p><strong>Python libraries:</strong> base64, pandas, streamlit, requests, bs4</p>
-    
-    <p><strong>Data sources:</strong></p>
+    <p>🎯 <strong>What can you do here?</strong></p>
     <ul>
-        <li><a href="https://dakar-auto.com/senegal/voitures-4" target="_blank">Cars</a></li>
-        <li><a href="https://dakar-auto.com/senegal/motos-and-scooters-3" target="_blank">Motorcycles & Scooters</a></li>
-        <li><a href="https://dakar-auto.com/senegal/location-de-voitures-19" target="_blank">Car Rentals</a></li>
+        <li>🔍 <strong>Scrape live data</strong> - Extract fresh listings from multiple pages</li>
+        <li>📥 <strong>Access pre-scraped data</strong> - Download ready-to-use datasets</li>
+        <li>📊 <strong>Visualize insights</strong> - Explore interactive dashboards and analytics</li>
+        <li>💬 <strong>Share feedback</strong> - Help us improve with your valuable input</li>
     </ul>
+    
+    <p>🛠️ <strong>Powered by:</strong> Python, Streamlit, BeautifulSoup, Pandas, Plotly</p>
+    
+    <p>🌐 <strong>Data sources from Dakar-Auto.com:</strong></p>
+    <ul>
+        <li><a href="https://dakar-auto.com/senegal/voitures-4" target="_blank">🚙 Cars & Vehicles</a></li>
+        <li><a href="https://dakar-auto.com/senegal/motos-and-scooters-3" target="_blank">🏍️ Motorcycles & Scooters</a></li>
+        <li><a href="https://dakar-auto.com/senegal/location-de-voitures-19" target="_blank">🔑 Car Rentals</a></li>
+    </ul>
+    
+    <p>✨ Get started by choosing an option from the menu on the left!</p>
     </div>
 """, unsafe_allow_html=True)
 
