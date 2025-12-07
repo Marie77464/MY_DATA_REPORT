@@ -4,19 +4,25 @@ from bs4 import BeautifulSoup as bs
 from requests import get
 import os
 import glob
+import plotly.express as px
+import plotly.graph_objects as go
 
-# Configuration de la page
+# Page configuration
 st.set_page_config(
     page_title="Dakar Auto Scraper",
     page_icon="🚗",
     layout="wide"
 )
 
-# CSS personnalisé pour rendre l'app plus jolie
+# Custom CSS for styling
 st.markdown("""
     <style>
     .main {
         padding: 2rem;
+        background-color: #FFE5E5;
+    }
+    .stApp {
+        background-color: #FFE5E5;
     }
     .stButton>button {
         width: 100%;
@@ -54,52 +60,55 @@ st.markdown("""
         margin-bottom: 2rem;
     }
     .info-box {
-        background-color: #f0f2f6;
+        background-color: #ffffff;
         padding: 1.5rem;
         border-radius: 10px;
         border-left: 5px solid #FF4B4B;
         margin-bottom: 2rem;
     }
+    [data-testid="stSidebar"] {
+        background-color: #FFD6D6;
+    }
     </style>
 """, unsafe_allow_html=True)
 
 # Header
-st.markdown('<p class="header-style">🚗 MY DATA APP</p>', unsafe_allow_html=True)
+st.markdown('<p class="header-style">MY BEST DATA APP</p>', unsafe_allow_html=True)
 st.markdown('<p class="subheader-style">Web Scraping & Data Analysis Tool</p>', unsafe_allow_html=True)
 
 # Description
 st.markdown("""
     <div class="info-box">
-    <h3>📊 About This App</h3>
+    <h3>About This App</h3>
     <p>This app performs webscraping of data from <strong>dakar-auto</strong> over multiple pages. 
     You can also download pre-scraped data from the app directly without scraping them.</p>
     
-    <p><strong>🐍 Python libraries:</strong> base64, pandas, streamlit, requests, bs4</p>
+    <p><strong>Python libraries:</strong> base64, pandas, streamlit, requests, bs4</p>
     
-    <p><strong>🔗 Data sources:</strong></p>
+    <p><strong>Data sources:</strong></p>
     <ul>
-        <li>🚗 <a href="https://dakar-auto.com/senegal/voitures-4" target="_blank">Voitures</a></li>
-        <li>🏍️ <a href="https://dakar-auto.com/senegal/motos-and-scooters-3" target="_blank">Motos & Scooters</a></li>
-        <li>🔑 <a href="https://dakar-auto.com/senegal/location-de-voitures-19" target="_blank">Location de voitures</a></li>
+        <li><a href="https://dakar-auto.com/senegal/voitures-4" target="_blank">Cars</a></li>
+        <li><a href="https://dakar-auto.com/senegal/motos-and-scooters-3" target="_blank">Motorcycles & Scooters</a></li>
+        <li><a href="https://dakar-auto.com/senegal/location-de-voitures-19" target="_blank">Car Rentals</a></li>
     </ul>
     </div>
 """, unsafe_allow_html=True)
 
 # Sidebar
 st.sidebar.image("https://img.icons8.com/fluency/96/000000/car.png", width=100)
-st.sidebar.title("📋 Menu")
+st.sidebar.title("Menu")
 st.sidebar.markdown("---")
 
 menu_option = st.sidebar.radio(
-    "Choisissez une option:",
-    ["🔍 Scraper des données", "📥 Télécharger données pré-scrapées", "📊 Dashboard", "📝 Évaluation de l'app"],
+    "Choose an option:",
+    ["Scrape Data", "Download Pre-scraped Data", "Dashboard", "App Evaluation"],
     index=0
 )
 
 st.sidebar.markdown("---")
-st.sidebar.info("💡 **Astuce:** Commencez par scraper les données ou téléchargez les données existantes!")
+st.sidebar.info("Tip: Start by scraping data or download existing data!")
 
-# Fonction de scraping
+# Scraping function
 def scrape_data(num_pages):
     df = pd.DataFrame()
     progress_bar = st.progress(0)
@@ -151,66 +160,66 @@ def scrape_data(num_pages):
             DF = pd.DataFrame(data)
             df = pd.concat([df, DF], axis=0).reset_index(drop=True)
         except Exception as e:
-            st.error(f"Erreur lors du scraping de la page {index}: {str(e)}")
+            st.error(f"Error scraping page {index}: {str(e)}")
     
     progress_bar.empty()
     status_text.empty()
     return df
 
-# Option 1: Scraper des données
-if menu_option == "🔍 Scraper des données":
-    st.header("🔍 Scraper des Annonces")
+# Option 1: Scrape data
+if menu_option == "Scrape Data":
+    st.header("Scrape Car Listings")
     
     col1, col2 = st.columns([2, 1])
     with col1:
         num_pages = st.number_input(
-            "Combien de pages voulez-vous scraper ?",
+            "How many pages do you want to scrape?",
             min_value=1,
             max_value=50,
             value=1,
             step=1,
-            help="Chaque page contient environ 20-30 annonces"
+            help="Each page contains approximately 20-30 listings"
         )
     
     with col2:
-        st.metric("Annonces estimées", f"~{num_pages * 25}")
+        st.metric("Estimated listings", f"~{num_pages * 25}")
     
-    if st.button("🚀 Lancer le scraping", key="scrape_btn"):
-        with st.spinner("🔄 Scraping en cours..."):
+    if st.button("Start Scraping", key="scrape_btn"):
+        with st.spinner("Scraping in progress..."):
             df = scrape_data(num_pages)
         
         if not df.empty:
-            st.success(f"✅ Scraping terminé ! {len(df)} annonces récupérées.")
+            st.success(f"Scraping completed! {len(df)} listings retrieved.")
             
-            # Afficher les données
-            st.subheader("📋 Aperçu des données")
+            # Display data
+            st.subheader("Data Preview")
             st.dataframe(df, use_container_width=True)
             
-            # Statistiques rapides
+            # Quick statistics
             col1, col2, col3, col4 = st.columns(4)
             with col1:
-                st.metric("Total annonces", len(df))
+                st.metric("Total listings", len(df))
             with col2:
-                st.metric("Marques uniques", df['brand'].nunique())
+                st.metric("Unique brands", df['brand'].nunique())
             with col3:
-                st.metric("Prix moyen", f"{df['price'].str.replace(' ', '').astype(float).mean():,.0f} FCFA")
+                st.metric("Average price", f"{df['price'].str.replace(' ', '').astype(float).mean():,.0f} FCFA")
             with col4:
-                st.metric("Année la plus récente", df['year'].max())
+                st.metric("Most recent year", df['year'].max())
             
-            # Télécharger
+            # Download
             csv = df.to_csv(index=False).encode('utf-8')
             st.download_button(
-                "📥 Télécharger le CSV",
+                "Download CSV",
                 data=csv,
-                file_name=f"annonces_dakar_auto_{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                file_name=f"dakar_auto_listings_{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}.csv",
                 mime="text/csv"
             )
         else:
-            st.warning("⚠️ Aucune donnée n'a été récupérée.")
+            st.warning("No data was retrieved.")
 
-# Option 2: Télécharger données pré-scrapées
-elif menu_option == "📥 Télécharger données pré-scrapées":
-    st.header("📥 Données Pré-Scrapées (Non nettoyées)")
+# Option 2: Download pre-scraped data
+elif menu_option == "Download Pre-scraped Data":
+    st.header("Pre-scraped Data (Uncleaned)")
     
     data_folder = "data"
     
@@ -218,11 +227,11 @@ elif menu_option == "📥 Télécharger données pré-scrapées":
         csv_files = glob.glob(os.path.join(data_folder, "*.csv"))
         
         if csv_files:
-            st.info(f"📁 {len(csv_files)} fichier(s) CSV disponible(s) dans le dossier 'data/'")
+            st.info(f"{len(csv_files)} CSV file(s) available in the 'data/' folder")
             
             for csv_file in csv_files:
                 file_name = os.path.basename(csv_file)
-                file_size = os.path.getsize(csv_file) / 1024  # en KB
+                file_size = os.path.getsize(csv_file) / 1024  # in KB
                 
                 col1, col2, col3 = st.columns([3, 1, 1])
                 
@@ -233,28 +242,28 @@ elif menu_option == "📥 Télécharger données pré-scrapées":
                 with col3:
                     with open(csv_file, "rb") as f:
                         st.download_button(
-                            "⬇️ Télécharger",
+                            "Download",
                             data=f,
                             file_name=file_name,
                             mime="text/csv",
                             key=file_name
                         )
                 
-                # Aperçu
-                with st.expander(f"👁️ Aperçu de {file_name}"):
+                # Preview
+                with st.expander(f"Preview {file_name}"):
                     df_preview = pd.read_csv(csv_file)
                     st.dataframe(df_preview.head(10), use_container_width=True)
-                    st.caption(f"Affichage des 10 premières lignes sur {len(df_preview)} total")
+                    st.caption(f"Showing first 10 rows out of {len(df_preview)} total")
                 
                 st.markdown("---")
         else:
-            st.warning("⚠️ Aucun fichier CSV trouvé dans le dossier 'data/'")
+            st.warning("No CSV files found in the 'data/' folder")
     else:
-        st.error("❌ Le dossier 'data/' n'existe pas. Veuillez créer ce dossier et y placer vos fichiers CSV.")
+        st.error("The 'data/' folder does not exist. Please create this folder and add your CSV files.")
 
 # Option 3: Dashboard
-elif menu_option == "📊 Dashboard":
-    st.header("📊 Dashboard des Données (Nettoyées)")
+elif menu_option == "Dashboard":
+    st.header("Data Dashboard (Cleaned)")
     
     data_folder = "data"
     
@@ -262,95 +271,169 @@ elif menu_option == "📊 Dashboard":
         csv_files = glob.glob(os.path.join(data_folder, "*.csv"))
         
         if csv_files:
-            selected_file = st.selectbox("Choisissez un fichier à visualiser:", csv_files)
+            selected_file = st.selectbox("Choose a file to visualize:", csv_files)
             
             if selected_file:
                 df = pd.read_csv(selected_file)
                 
-                st.subheader("📈 Statistiques Générales")
+                st.subheader("General Statistics")
                 col1, col2, col3, col4 = st.columns(4)
                 
                 with col1:
-                    st.metric("Total annonces", len(df))
+                    st.metric("Total listings", len(df))
                 with col2:
                     if 'brand' in df.columns:
-                        st.metric("Marques", df['brand'].nunique())
+                        st.metric("Brands", df['brand'].nunique())
                 with col3:
                     if 'price' in df.columns:
                         prices = pd.to_numeric(df['price'].astype(str).str.replace(' ', '').str.replace(',', ''), errors='coerce')
-                        st.metric("Prix moyen", f"{prices.mean():,.0f} FCFA")
+                        st.metric("Average price", f"{prices.mean():,.0f} FCFA")
                 with col4:
                     if 'year' in df.columns:
-                        st.metric("Année moyenne", f"{pd.to_numeric(df['year'], errors='coerce').mean():.0f}")
+                        st.metric("Average year", f"{pd.to_numeric(df['year'], errors='coerce').mean():.0f}")
                 
-                # Afficher le dataframe
-                st.subheader("📋 Données")
+                # Display dataframe
+                st.subheader("Data Table")
                 st.dataframe(df, use_container_width=True)
                 
-                # Graphiques
-                if 'brand' in df.columns:
-                    st.subheader("📊 Top 10 des Marques")
-                    top_brands = df['brand'].value_counts().head(10)
-                    st.bar_chart(top_brands)
+                # Charts section
+                st.subheader("Visual Analytics")
                 
-                if 'fuel_type' in df.columns:
-                    st.subheader("⛽ Répartition par Type de Carburant")
-                    fuel_counts = df['fuel_type'].value_counts()
-                    st.bar_chart(fuel_counts)
+                # Top brands chart
+                if 'brand' in df.columns:
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        st.markdown("**Top 10 Brands**")
+                        top_brands = df['brand'].value_counts().head(10).reset_index()
+                        top_brands.columns = ['Brand', 'Count']
+                        fig1 = px.bar(top_brands, x='Brand', y='Count', 
+                                     color='Count',
+                                     color_continuous_scale='Reds')
+                        fig1.update_layout(height=400, showlegend=False)
+                        st.plotly_chart(fig1, use_container_width=True)
+                    
+                    with col2:
+                        st.markdown("**Brand Distribution**")
+                        fig2 = px.pie(top_brands, values='Count', names='Brand',
+                                     color_discrete_sequence=px.colors.sequential.RdBu)
+                        fig2.update_layout(height=400)
+                        st.plotly_chart(fig2, use_container_width=True)
+                
+                # Fuel type and gearbox
+                if 'fuel_type' in df.columns or 'gearbox' in df.columns:
+                    col1, col2 = st.columns(2)
+                    
+                    if 'fuel_type' in df.columns:
+                        with col1:
+                            st.markdown("**Fuel Type Distribution**")
+                            fuel_counts = df['fuel_type'].value_counts().reset_index()
+                            fuel_counts.columns = ['Fuel Type', 'Count']
+                            fig3 = px.bar(fuel_counts, x='Fuel Type', y='Count',
+                                         color='Count',
+                                         color_continuous_scale='Oranges')
+                            fig3.update_layout(height=400, showlegend=False)
+                            st.plotly_chart(fig3, use_container_width=True)
+                    
+                    if 'gearbox' in df.columns:
+                        with col2:
+                            st.markdown("**Gearbox Type Distribution**")
+                            gearbox_counts = df['gearbox'].value_counts().reset_index()
+                            gearbox_counts.columns = ['Gearbox', 'Count']
+                            fig4 = px.pie(gearbox_counts, values='Count', names='Gearbox',
+                                         color_discrete_sequence=px.colors.sequential.Purples)
+                            fig4.update_layout(height=400)
+                            st.plotly_chart(fig4, use_container_width=True)
+                
+                # Price analysis
+                if 'price' in df.columns:
+                    st.markdown("**Price Analysis**")
+                    df_price = df.copy()
+                    df_price['price_numeric'] = pd.to_numeric(
+                        df_price['price'].astype(str).str.replace(' ', '').str.replace(',', ''), 
+                        errors='coerce'
+                    )
+                    df_price = df_price.dropna(subset=['price_numeric'])
+                    
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        st.markdown("**Price Distribution**")
+                        fig5 = px.histogram(df_price, x='price_numeric', nbins=30,
+                                           color_discrete_sequence=['#FF4B4B'])
+                        fig5.update_layout(height=400, xaxis_title="Price (FCFA)", yaxis_title="Count")
+                        st.plotly_chart(fig5, use_container_width=True)
+                    
+                    with col2:
+                        if 'brand' in df.columns:
+                            st.markdown("**Average Price by Brand (Top 10)**")
+                            top_10_brands = df['brand'].value_counts().head(10).index
+                            df_top_brands = df_price[df_price['brand'].isin(top_10_brands)]
+                            avg_price_by_brand = df_top_brands.groupby('brand')['price_numeric'].mean().sort_values(ascending=False).reset_index()
+                            avg_price_by_brand.columns = ['Brand', 'Average Price']
+                            fig6 = px.bar(avg_price_by_brand, x='Brand', y='Average Price',
+                                         color='Average Price',
+                                         color_continuous_scale='Greens')
+                            fig6.update_layout(height=400, showlegend=False)
+                            st.plotly_chart(fig6, use_container_width=True)
+                
+                # Year analysis
+                if 'year' in df.columns:
+                    st.markdown("**Year Analysis**")
+                    df_year = df.copy()
+                    df_year['year_numeric'] = pd.to_numeric(df_year['year'], errors='coerce')
+                    df_year = df_year.dropna(subset=['year_numeric'])
+                    
+                    year_counts = df_year['year_numeric'].value_counts().sort_index().reset_index()
+                    year_counts.columns = ['Year', 'Count']
+                    
+                    fig7 = px.line(year_counts, x='Year', y='Count', markers=True,
+                                  color_discrete_sequence=['#FF4B4B'])
+                    fig7.update_layout(height=400, xaxis_title="Year", yaxis_title="Number of Listings")
+                    st.plotly_chart(fig7, use_container_width=True)
+                
         else:
-            st.warning("⚠️ Aucun fichier CSV trouvé dans le dossier 'data/'")
+            st.warning("No CSV files found in the 'data/' folder")
     else:
-        st.error("❌ Le dossier 'data/' n'existe pas.")
+        st.error("The 'data/' folder does not exist.")
 
-# Option 4: Évaluation
-elif menu_option == "📝 Évaluation de l'app":
-    st.header("📝 Évaluez Notre Application")
+# Option 4: Evaluation
+elif menu_option == "App Evaluation":
+    st.header("Evaluate Our Application")
     
     st.markdown("""
-        Votre avis compte ! Aidez-nous à améliorer cette application en remplissant un formulaire d'évaluation.
+        Your feedback matters! Help us improve this application by completing an evaluation form.
     """)
     
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("📋 KoboToolbox")
+        st.subheader("KoboToolbox")
         st.markdown("""
-            Formulaire détaillé pour une évaluation complète de l'application.
+            Detailed form for a comprehensive evaluation of the application.
         """)
-        kobotoolbox_url = st.text_input(
-            "URL KoboToolbox:",
-            placeholder="https://ee.kobotoolbox.org/x/...",
-            help="Entrez l'URL de votre formulaire KoboToolbox"
-        )
-        if st.button("🔗 Ouvrir KoboToolbox", key="kobo"):
-            if kobotoolbox_url:
-                st.markdown(f'<a href="{kobotoolbox_url}" target="_blank"><button style="background-color:#FF4B4B;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;">Accéder au formulaire KoboToolbox</button></a>', unsafe_allow_html=True)
-            else:
-                st.warning("⚠️ Veuillez entrer l'URL du formulaire")
+        kobotoolbox_url = "https://ee.kobotoolbox.org/x/uYmlZU5X"
+        if st.button("Open KoboToolbox Form", key="kobo"):
+            st.markdown(f'<meta http-equiv="refresh" content="0;url={kobotoolbox_url}">', unsafe_allow_html=True)
+            st.markdown(f'[Click here if not redirected automatically]({kobotoolbox_url})')
     
     with col2:
-        st.subheader("📝 Google Forms")
+        st.subheader("Google Forms")
         st.markdown("""
-            Formulaire rapide pour partager votre expérience utilisateur.
+            Quick form to share your user experience.
         """)
-        google_form_url = st.text_input(
-            "URL Google Forms:",
-            placeholder="https://forms.gle/...",
-            help="Entrez l'URL de votre formulaire Google Forms"
-        )
-        if st.button("🔗 Ouvrir Google Forms", key="gforms"):
-            if google_form_url:
-                st.markdown(f'<a href="{google_form_url}" target="_blank"><button style="background-color:#4285F4;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;">Accéder au formulaire Google Forms</button></a>', unsafe_allow_html=True)
-            else:
-                st.warning("⚠️ Veuillez entrer l'URL du formulaire")
+        google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSeL5dzKVxgxD-rOZqLLiDWmIE1dPhBjeeYcrEl3_EcTGeH2zw/viewform?usp=header"
+        if st.button("Open Google Forms", key="gforms"):
+            st.markdown(f'<meta http-equiv="refresh" content="0;url={google_form_url}">', unsafe_allow_html=True)
+            st.markdown(f'[Click here if not redirected automatically]({google_form_url})')
     
     st.markdown("---")
-    st.info("💡 Vos retours nous aident à améliorer constamment l'application. Merci pour votre contribution !")
+    st.info("Your feedback helps us constantly improve the application. Thank you for your contribution!")
 
 # Footer
 st.markdown("---")
 st.markdown("""
     <div style='text-align: center; color: #666;'>
-        <p>Développé avec ❤️ using Streamlit | © 2024 Dakar Auto Scraper</p>
+        <p>Developed with love using Streamlit | 2024 Dakar Auto Scraper</p>
     </div>
 """, unsafe_allow_html=True)
