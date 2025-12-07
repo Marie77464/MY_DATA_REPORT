@@ -31,7 +31,7 @@ st.markdown("""
     
     .stApp {
         background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-                          url('images/lamborghini.jpg.png');
+                          url('images/lamborghini_pink.jpg.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
