@@ -78,13 +78,26 @@ st.markdown("""
         color: #E2E8F0;
     }
     div[data-testid="stDataFrame"] {
-        background-color: white;
-        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 15px;
         border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(255,215,0,0.3);
+        box-shadow: 0 4px 6px rgba(255,215,0,0.4);
+        border: 2px solid #FFD700;
     }
     div[data-testid="stDataFrame"] > div {
-        background-color: white !important;
+        background-color: rgba(255, 255, 255, 0.95) !important;
+    }
+    div[data-testid="stDataFrame"] table {
+        color: #000000 !important;
+    }
+    div[data-testid="stDataFrame"] th {
+        background-color: #1a202c !important;
+        color: #FFD700 !important;
+        font-weight: bold !important;
+    }
+    div[data-testid="stDataFrame"] td {
+        color: #000000 !important;
+        background-color: #ffffff !important;
     }
     </style>
 """, unsafe_allow_html=True)
