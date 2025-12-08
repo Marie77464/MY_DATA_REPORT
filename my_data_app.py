@@ -290,7 +290,7 @@ def scrape_location(num_pages):
 init_db()
 
 # Main title
-st.markdown("<h1>🚗 DAKA_AUTO_SCRAPER 🏍️</h1>", unsafe_allow_html=True)
+st.markdown("<h1>🚗 DAKAR_AUTO_SCRAPER 🏍️</h1>", unsafe_allow_html=True)
 
 # Sidebar
 with st.sidebar:
@@ -304,11 +304,11 @@ with st.sidebar:
     
     st.markdown("---")
     st.markdown("### ℹ️ About")
-    st.info("DAKA_AUTO_SCRAPER is a powerful tool to scrape and analyze car data from Dakar-Auto.com")
+    st.info("DAKAR_AUTO_SCRAPER is a powerful tool to scrape and analyze car data from Dakar-Auto.com")
 
 # HOME PAGE
 if menu == "🏠 Home":
-    st.markdown("## 👋 Welcome to DAKA_AUTO_SCRAPER!")
+    st.markdown("## 👋 Welcome to DAKAR_AUTO_SCRAPER!")
     
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -412,7 +412,27 @@ elif menu == "📈 Dashboard":
     )
     
     table_map = {"Voitures": "voitures", "Motos": "motos", "Location": "location"}
-    df = load_from_db(table_map[data_type])
+    
+    # Load data based on source selection
+    if data_source == "📁 From GitHub CSV Files":
+        # GitHub raw URLs for your CSV files in data folder
+        github_csv_urls = {
+            "Voitures": "https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/auto_voiture_scraper.csv",
+            "Motos": "https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/motos_and_scooters.csv",
+            "Location": "https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/location_de_voiture.csv"
+        }
+        
+        try:
+            with st.spinner(f'Loading {data_type} from GitHub...'):
+                df = pd.read_csv(github_csv_urls[data_type])
+                st.success(f"✅ Loaded {len(df)} records from GitHub CSV file")
+        except Exception as e:
+            st.error(f"❌ Error loading CSV from GitHub: {str(e)}")
+            st.info("💡 Make sure your CSV files are in the 'data' folder on GitHub with these names: auto_voiture_scraper.csv, motos_and_scooters.csv, location_de_voiture.csv")
+            df = pd.DataFrame()
+    else:
+        # Load from database
+        df = load_from_db(table_map[data_type])
     
     if len(df) > 0:
         # Remove scraped_date and id for analysis
@@ -507,6 +527,14 @@ elif menu == "📈 Dashboard":
 elif menu == "📁 View Data":
     st.markdown("## 📁 View Scraped Data")
     
+    # Option to load from GitHub CSV files
+    st.markdown("### 📥 Load Data Source")
+    data_source = st.radio(
+        "Choose data source:",
+        ["📊 From Database (Scraped Data)", "📁 From GitHub CSV Files"],
+        horizontal=True
+    )
+    
     data_type = st.selectbox(
         "Select data to view:",
         ["Voitures", "Motos", "Location"]
@@ -596,7 +624,6 @@ elif menu == "📝 Web Evaluation App":
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #FFD700; background: rgba(26, 32, 44, 0.8); padding: 15px; border-radius: 10px;'>
-    <p style='margin: 0;'><strong>Made with ❤️ by DAKA Team | © 2024 DAKA_AUTO_SCRAPER</strong></p>
+    <p style='margin: 0;'><strong>Made with ❤️ by DAKAR Team | © 2024 DAKAR_AUTO_SCRAPER</strong></p>
 </div>
 """, unsafe_allow_html=True)
-
