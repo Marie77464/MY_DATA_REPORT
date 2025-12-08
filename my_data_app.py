@@ -379,7 +379,7 @@ if menu == "🏠 Home":
             st.markdown("### 🚗 Cars Data from GitHub")
             try:
                 with st.spinner('Loading cars data...'):
-                    df = pd.read_csv("https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/auto_voiture_scraper.csv")
+                    df = pd.read_csv("https://raw.githubusercontent.com/Marie77464/MY_DATA_REPORT/refs/heads/master/data/auto_voiture_scraper.csv")
                     st.success(f"✅ Loaded {len(df)} cars records")
                     st.dataframe(df, use_container_width=True)
                     
@@ -398,7 +398,7 @@ if menu == "🏠 Home":
             st.markdown("### 🏍️ Motos Data from GitHub")
             try:
                 with st.spinner('Loading motos data...'):
-                    df = pd.read_csv("https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/motos_and_scooters.csv")
+                    df = pd.read_csv("https://raw.githubusercontent.com/Marie77464/MY_DATA_REPORT/refs/heads/master/data/motos_and_scooters.csv")
                     st.success(f"✅ Loaded {len(df)} motos records")
                     st.dataframe(df, use_container_width=True)
                     
@@ -417,7 +417,7 @@ if menu == "🏠 Home":
             st.markdown("### 🔑 Location Data from GitHub")
             try:
                 with st.spinner('Loading location data...'):
-                    df = pd.read_csv("https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/location_de_voiture.csv")
+                    df = pd.read_csv("https://raw.githubusercontent.com/Marie77464/MY_DATA_REPORT/refs/heads/master/data/location_de_voiture.csv")
                     st.success(f"✅ Loaded {len(df)} rental cars records")
                     st.dataframe(df, use_container_width=True)
                     
@@ -500,9 +500,9 @@ elif menu == "📈 Dashboard":
     if data_source == "📁 From GitHub CSV Files":
         # GitHub raw URLs for your CSV files in data folder
         github_csv_urls = {
-            "Voitures": "https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/auto_voiture_scraper.csv",
-            "Motos": "https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/motos_and_scooters.csv",
-            "Location": "https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/location_de_voiture.csv"
+            "Voitures": "https://raw.githubusercontent.com/Marie77464/MY_DATA_REPORT/refs/heads/master/data/auto_voiture_scraper.csv",
+            "Motos": "https://raw.githubusercontent.com/Marie77464/MY_DATA_REPORT/refs/heads/master/data/motos_and_scooters.csv",
+            "Location": "https://raw.githubusercontent.com/Marie77464/MY_DATA_REPORT/refs/heads/master/data/location_de_voiture.csv"
         }
         
         try:
