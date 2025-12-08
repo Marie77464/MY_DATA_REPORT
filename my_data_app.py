@@ -488,7 +488,14 @@ elif menu == "🔍 Scraper":
 # DASHBOARD PAGE
 elif menu == "📈 Dashboard":
     st.markdown("## 📈 Data Analytics Dashboard")
-    
+    data_source = st.radio(
+        "📥 Load data from:",
+        ["📊 From Database (Scraped Data)", "📁 From GitHub CSV Files"],
+        horizontal=True
+     data_source = st.radio(
+        "📥 Load data from:",
+        ["📊 From Database (Scraped Data)", "📁 From GitHub CSV Files"],
+        horizontal=True
     data_type = st.selectbox(
         "Select data to visualize:",
         ["Voitures", "Motos", "Location"]
@@ -710,3 +717,4 @@ st.markdown("""
     <p style='margin: 0;'><strong>Made with ❤️ by MARIE PAUL BASSE | © 2025 DAKAR_AUTO_SCRAPER</strong></p>
 </div>
 """, unsafe_allow_html=True)
+
