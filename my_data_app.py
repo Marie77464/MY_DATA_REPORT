@@ -488,13 +488,7 @@ elif menu == "🔍 Scraper":
 # DASHBOARD PAGE
 elif menu == "📈 Dashboard":
     st.markdown("## 📈 Data Analytics Dashboard")
-
-     data_source = st.radio(
-        "📥 Load data from:",
-        ["📊 From Database (Scraped Data)", "📁 From GitHub CSV Files"],
-        horizontal=True
-    )
-
+    
     data_type = st.selectbox(
         "Select data to visualize:",
         ["Voitures", "Motos", "Location"]
@@ -532,14 +526,11 @@ elif menu == "📈 Dashboard":
         with col1:
             st.metric("📊 Total Records", len(df_clean))
         with col2:
-           if 'brand' in df_clean.columns:
-                st.metric("🏷️ Unique Brands", df_clean['brand'].nunique())
-           else: 
-               st.metric("🏷️ Unique Brands", "N/A")
+            st.metric("🏷️ Unique Brands", df_clean['brand'].nunique())
         with col3:
             if 'price' in df_clean.columns:
                 try:
-                    avg_price = df_clean['price'].astype(str).str.replace(',', '').astype(float).mean() 
+                    avg_price = df_clean['price'].str.replace(',', '').astype(float).mean()
                     st.metric("💰 Avg Price (FCFA)", f"{avg_price:,.0f}")
                 except:
                     st.metric("💰 Avg Price (FCFA)", "N/A")
@@ -719,4 +710,3 @@ st.markdown("""
     <p style='margin: 0;'><strong>Made with ❤️ by MARIE PAUL BASSE | © 2025 DAKAR_AUTO_SCRAPER</strong></p>
 </div>
 """, unsafe_allow_html=True)
-
