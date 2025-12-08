@@ -553,24 +553,30 @@ elif menu == "📈 Dashboard":
         
         with col1:
             # Brand distribution
-            brand_counts = df_clean['brand'].value_counts().head(10)
-            fig1 = px.bar(
-                x=brand_counts.values,
-                y=brand_counts.index,
-                orientation='h',
-                title="Top 10 Brands",
-                labels={'x': 'Count', 'y': 'Brand'},
-                color=brand_counts.values,
-                color_continuous_scale='YlOrRd'
-            )
-            fig1.update_layout(
-                showlegend=False,
-                plot_bgcolor='rgba(26, 32, 44, 0.8)',
-                paper_bgcolor='rgba(26, 32, 44, 0.8)',
-                font=dict(color='#FFD700')
-            )
-            st.plotly_chart(fig1, use_container_width=True)
+            if 'brand' in df_clean.columns:
+                brand_counts = df_clean['brand'].value_counts().head(10)
         
+                fig1 = px.bar(
+                    x=brand_counts.values,
+                    y=brand_counts.index,
+                    orientation='h',
+                    title="Top 10 Brands",
+                    labels={'x': 'Count', 'y': 'Brand'},
+                    color=brand_counts.values,
+                    color_continuous_scale='YlOrRd'
+                )
+        
+                fig1.update_layout(
+                    showlegend=False,
+                    plot_bgcolor='rgba(26, 32, 44, 0.8)',
+                    paper_bgcolor='rgba(26, 32, 44, 0.8)',
+                    font=dict(color='#FFD700')
+                )
+        
+                st.plotly_chart(fig1, use_container_width=True)
+        
+            else:
+                st.info("ℹ️ Brand distribution not available for this data type")
         with col2:
             # Year distribution
             if 'year' in df_clean.columns:
@@ -719,6 +725,7 @@ st.markdown("""
     <p style='margin: 0;'><strong>Made with ❤️ by DAKAR Team | © 2024 DAKAR_AUTO_SCRAPER</strong></p>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
