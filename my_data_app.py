@@ -532,7 +532,10 @@ elif menu == "📈 Dashboard":
         with col1:
             st.metric("📊 Total Records", len(df_clean))
         with col2:
-            st.metric("🏷️ Unique Brands", df_clean['brand'].nunique())
+            if github_csv_urls.keys == "Location":
+                st.metric("🏷️ Unique Brands", df_clean['brand'].nunique())
+            else:
+                st.metric("🏷️ Column drand not exist")
         with col3:
             if 'price' in df_clean.columns:
                 try:
@@ -716,4 +719,5 @@ st.markdown("""
     <p style='margin: 0;'><strong>Made with ❤️ by DAKAR Team | © 2024 DAKAR_AUTO_SCRAPER</strong></p>
 </div>
 """, unsafe_allow_html=True)
+
 
