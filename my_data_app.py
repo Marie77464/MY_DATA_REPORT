@@ -290,7 +290,7 @@ def scrape_location(num_pages):
 init_db()
 
 # Main title
-st.markdown("<h1>🚗 DAKAR_AUTO_SCRAPER 🏍️</h1>", unsafe_allow_html=True)
+st.markdown("<h1> DAKAR_AUTO_SCRAPER </h1>", unsafe_allow_html=True)
 
 # Sidebar
 with st.sidebar:
@@ -710,4 +710,5 @@ st.markdown("""
     <p style='margin: 0;'><strong>Made with ❤️ by MARIE PAUL BASSE | © 2025 DAKAR_AUTO_SCRAPER</strong></p>
 </div>
 """, unsafe_allow_html=True)
+
 
