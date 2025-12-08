@@ -348,6 +348,89 @@ if menu == "🏠 Home":
     </ol>
     </div>
     """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    st.markdown("### 📁 View Pre-Scraped Data")
+    st.markdown("""
+    <div style='color: #E2E8F0; margin-bottom: 20px;'>
+        <p>Click on a button below to view the pre-scraped data:</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        if st.button("🚗 View Cars Data", key="view_cars", use_container_width=True):
+            st.session_state['show_csv'] = 'cars'
+    
+    with col2:
+        if st.button("🏍️ View Motos Data", key="view_motos", use_container_width=True):
+            st.session_state['show_csv'] = 'motos'
+    
+    with col3:
+        if st.button("🔑 View Location Data", key="view_location", use_container_width=True):
+            st.session_state['show_csv'] = 'location'
+    
+    # Display data based on button clicked
+    if 'show_csv' in st.session_state:
+        st.markdown("---")
+        
+        if st.session_state['show_csv'] == 'cars':
+            st.markdown("### 🚗 Cars Data from GitHub")
+            try:
+                with st.spinner('Loading cars data...'):
+                    df = pd.read_csv("https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/auto_voiture_scraper.csv")
+                    st.success(f"✅ Loaded {len(df)} cars records")
+                    st.dataframe(df, use_container_width=True)
+                    
+                    # Download button
+                    csv = df.to_csv(index=False).encode('utf-8')
+                    st.download_button(
+                        label="📥 Download Cars CSV",
+                        data=csv,
+                        file_name=f"cars_data_{datetime.now().strftime('%Y%m%d')}.csv",
+                        mime="text/csv",
+                    )
+            except Exception as e:
+                st.error(f"❌ Error loading data: {str(e)}")
+        
+        elif st.session_state['show_csv'] == 'motos':
+            st.markdown("### 🏍️ Motos Data from GitHub")
+            try:
+                with st.spinner('Loading motos data...'):
+                    df = pd.read_csv("https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/motos_and_scooters.csv")
+                    st.success(f"✅ Loaded {len(df)} motos records")
+                    st.dataframe(df, use_container_width=True)
+                    
+                    # Download button
+                    csv = df.to_csv(index=False).encode('utf-8')
+                    st.download_button(
+                        label="📥 Download Motos CSV",
+                        data=csv,
+                        file_name=f"motos_data_{datetime.now().strftime('%Y%m%d')}.csv",
+                        mime="text/csv",
+                    )
+            except Exception as e:
+                st.error(f"❌ Error loading data: {str(e)}")
+        
+        elif st.session_state['show_csv'] == 'location':
+            st.markdown("### 🔑 Location Data from GitHub")
+            try:
+                with st.spinner('Loading location data...'):
+                    df = pd.read_csv("https://raw.githubusercontent.com/Marie77464/daka-auto-scraper/master/data/location_de_voiture.csv")
+                    st.success(f"✅ Loaded {len(df)} rental cars records")
+                    st.dataframe(df, use_container_width=True)
+                    
+                    # Download button
+                    csv = df.to_csv(index=False).encode('utf-8')
+                    st.download_button(
+                        label="📥 Download Location CSV",
+                        data=csv,
+                        file_name=f"location_data_{datetime.now().strftime('%Y%m%d')}.csv",
+                        mime="text/csv",
+                    )
+            except Exception as e:
+                st.error(f"❌ Error loading data: {str(e)}")
 
 # SCRAPER PAGE
 elif menu == "🔍 Scraper":
