@@ -707,6 +707,6 @@ elif menu == "📝 Web Evaluation App":
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #FFD700; background: rgba(26, 32, 44, 0.8); padding: 15px; border-radius: 10px;'>
-    <p style='margin: 0;'><strong>Made with ❤️ by MARI PAUL BASSE | © 2024 DAKAR_AUTO_SCRAPER</strong></p>
+    <p style='margin: 0;'><strong>Made with ❤️ by MARIE PAUL BASSE | © 2024 DAKAR_AUTO_SCRAPER</strong></p>
 </div>
 """, unsafe_allow_html=True)
