@@ -293,7 +293,7 @@ def scrape_location(num_pages):
 init_db()
 
 # Main title
-st.markdown("<h1> DAKAR_AUTO_SCRAPER </h1>", unsafe_allow_html=True)
+st.markdown("<h1> DAKAR AUTO SCRAPER </h1>", unsafe_allow_html=True)
 
 # Sidebar
 with st.sidebar:
@@ -307,11 +307,11 @@ with st.sidebar:
     
     st.markdown("---")
     st.markdown("### ℹ️ About")
-    st.info("DAKAR_AUTO_SCRAPER is a powerful tool to scrape and analyze car data from Dakar-Auto.com")
+    st.info("DAKAR AUTO SCRAPER is a powerful tool to scrape and analyze car data from Dakar-Auto.com")
 
 # HOME PAGE
 if menu == " Home":
-    st.markdown("## Welcome to DAKAR_AUTO_SCRAPER!")
+    st.markdown("## Welcome to DAKAR AUTO SCRAPER!")
     
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -666,3 +666,4 @@ st.markdown("""
 <p style='margin: 0;'><strong>Made with ❤️ by MARIE PAUL BASSE | © 2025 DAKAR_AUTO_SCRAPER</strong></p>
 </div>
 """, unsafe_allow_html=True)
+
